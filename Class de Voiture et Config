@@ -1,0 +1,166 @@
+
+public final class ConfigVoiture 
+{
+  private ConfigVoiture(){}
+	static Voiture V;
+	static int idVEssence;
+	static String NomVEssence;
+	static int LongueurVEssence;
+	static int LargeurVEssence;
+	static int ControleVEssence;
+	static int AutonomieVEssence;
+	static int DureeDeRechargeVEssence;
+	static int RapiditeVEssence;
+	static int ClimatTempsVEssence;
+	static int ClimatPluieVEssence;
+	static int ClimatVentVEssence;
+	
+	
+	static int idVElec;
+	static String NomVElec;
+	static int LongueurVElec;
+	static int LargeurVElec;
+	static int ControleVElec;
+	static int AutonomieVElec;
+	static int DureeDeRechargeVElec;
+	static int RapiditeVElec;
+	static int ClimatTempsVElec;
+	static int ClimatPluieVElec;
+	static int ClimatVentVElec;
+	
+	static int idVHybri;
+	static String NomVHybri;
+	static int LongueurVHybri;
+	static int LargeurVHybri;
+	static int ControleVHybri;
+	static int AutonomieVHybri;
+	static int DureeDeRechargeVHybri;
+	static int RapiditeVHybri;
+	static int ClimatTempsVHybri;
+	static int ClimatPluieVHybri;
+	static int ClimatVentVHybri;
+	
+	
+	
+	public final static void EstVoitureEssence()
+	{
+		V = new Voiture();
+		V.SetId(ConfigVoiture.idVEssence);
+		V.SetNom(ConfigVoiture.NomVEssence);
+		V.SetLongueur(ConfigVoiture.LongueurVEssence);
+		V.SetLargeur(ConfigVoiture.LargeurVEssence);
+		V.SetControle(ConfigVoiture.ControleVEssence);
+		V.SetAutonmie(ConfigVoiture.AutonomieVEssence);
+		V.SetVitesseCourante(0);
+		V.SetDureeDeRecharge(ConfigVoiture.DureeDeRechargeVEssence);
+		V.SetAcceleration(0);
+		V.SetRapiditeDUsement(ConfigVoiture.RapiditeVEssence);
+		V.SetClimatTemps(ConfigVoiture.ClimatTempsVEssence);
+		V.SetClimatPluie(ConfigVoiture.ClimatPluieVEssence);
+		V.SetClimatVent(ConfigVoiture.ClimatVentVEssence);
+	}
+	
+	
+	
+	public final static void EstVoitureElec()
+	{
+		V = new Voiture();
+		V.SetId(ConfigVoiture.idVElec);
+		V.SetNom(ConfigVoiture.NomVElec);
+		V.SetLongueur(ConfigVoiture.LongueurVElec);
+		V.SetLargeur(ConfigVoiture.LargeurVElec);
+		V.SetControle(ConfigVoiture.ControleVElec);
+		V.SetAutonmie(ConfigVoiture.AutonomieVElec);
+		V.SetVitesseCourante(0);
+		V.SetDureeDeRecharge(ConfigVoiture.DureeDeRechargeVElec);
+		V.SetAcceleration(0);
+		V.SetRapiditeDUsement(ConfigVoiture.RapiditeVElec);
+		V.SetClimatTemps(ConfigVoiture.ClimatTempsVElec);
+		V.SetClimatPluie(ConfigVoiture.ClimatPluieVElec);
+		V.SetClimatVent(ConfigVoiture.ClimatVentVElec);
+	}
+	
+	
+	
+	public final static void EstVoitureHybri()
+	{
+		V = new Voiture();
+		V.SetId(ConfigVoiture.idVHybri);
+		V.SetNom(ConfigVoiture.NomVHybri);
+		V.SetLongueur(ConfigVoiture.LongueurVHybri);
+		V.SetLargeur(ConfigVoiture.LargeurVHybri);
+		V.SetControle(ConfigVoiture.ControleVHybri);
+		V.SetAutonmie(ConfigVoiture.AutonomieVHybri);
+		V.SetVitesseCourante(0);
+		V.SetDureeDeRecharge(ConfigVoiture.DureeDeRechargeVHybri);
+		V.SetAcceleration(0);
+		V.SetRapiditeDUsement(ConfigVoiture.RapiditeVHybri);
+		V.SetClimatTemps(ConfigVoiture.ClimatTempsVHybri);
+		V.SetClimatPluie(ConfigVoiture.ClimatPluieVHybri);
+		V.SetClimatVent(ConfigVoiture.ClimatVentVHybri);
+	}
+	public final static void AfficheConfig()
+	{
+		System.out.println("id:"+V.GetId());
+		System.out.println("Nom:"+V.GetNom());
+		System.out.println("Longueur:"+V.GetLongueur());
+		System.out.println("Largeur:"+V.GetLargeur());
+		System.out.println("Controle:"+V.GetControle());
+		System.out.println("Autonomie:"+V.GetAutonomie());
+		System.out.println("Duree de Recharge:"+V.GetDureeDeRecharge());
+		System.out.println("Rapidite d'usement:"+V.GetRapiditeDUsement());
+		System.out.println("ClimatTemps:"+V.GetClimatTemps());
+		System.out.println("ClimatPluie:"+V.GetClimatPluie());
+		System.out.println("ClimatVent:"+V.GetClimatVent());
+			
+	}
+
+}
+
+
+class Voiture
+{
+	private int id;
+	private String Nom;
+	private int Longueur;
+	private int Largeur;
+	private int Controle;
+	private int Autonomie;
+	private int VitesseCourante;
+	private int DureeDeRecharge;
+	private int Acceleration;
+	private int RapiditeDUsement;
+	private int ClimatTemps;
+	private int ClimatPluie;
+	private int ClimatVent;
+	
+	public int GetId(){return this.id;}
+	public String GetNom(){return this.Nom;}
+	public int GetLongueur(){return this.Longueur;}
+	public int GetLargeur(){return this.Largeur; }
+	public int GetControle(){return this.Controle;}
+	public int GetAutonomie(){return this.Autonomie;}
+	public int GetVitesseCourante(){return this.VitesseCourante;}
+	public int GetDureeDeRecharge(){return this.DureeDeRecharge;}
+	public int GetAcceleration(){return this.Acceleration;}
+	public int GetRapiditeDUsement(){return this.RapiditeDUsement;}
+	public int GetClimatTemps(){return this.ClimatTemps;}
+	public int GetClimatPluie(){return this.ClimatPluie;}
+	public int GetClimatVent(){return this.ClimatVent;}
+	
+	public void SetId(int id){this.id=id;}
+	public void SetNom(String Nom){this.Nom=Nom;}
+	public void SetLongueur(int Longueur){this.Longueur=Longueur;}
+	public void SetLargeur(int Largeur){this.Largeur=Largeur; }
+	public void SetControle(int Controle){this.Controle=Controle;}
+	public void SetAutonmie(int Autonomie){this.Autonomie=Autonomie;}
+	public void SetVitesseCourante(int VitesseCourante){this.VitesseCourante=VitesseCourante;}
+	public void SetDureeDeRecharge(int DureeDeRecharge){this.DureeDeRecharge=DureeDeRecharge;}
+	public void SetAcceleration(int Acceleration){this.Acceleration=Acceleration;}
+	public void SetRapiditeDUsement(int RapiditeDUsement){this.RapiditeDUsement=RapiditeDUsement;}
+	public void SetClimatTemps(int ClimatTemps){this.ClimatTemps=ClimatTemps;}
+	public void SetClimatPluie(int ClimatPluie){this.ClimatPluie=ClimatPluie;}
+	public void SetClimatVent(int ClimatVent){this.ClimatVent=ClimatVent;}
+	
+	
+}
