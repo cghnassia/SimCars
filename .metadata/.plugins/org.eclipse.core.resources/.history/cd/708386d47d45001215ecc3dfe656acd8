@@ -1,8 +1,0 @@
-
-public abstract class Voiture {
-	protected int id;
-	protected int cSpeed;
-	
-	
-	public abstract boolean hasToFill();
-}
