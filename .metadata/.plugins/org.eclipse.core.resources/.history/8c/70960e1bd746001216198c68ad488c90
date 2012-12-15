@@ -1,0 +1,37 @@
+
+public abstract class Segment {
+	
+		protected TypeSegment type;
+		protected int vitesseMax; 
+		protected boolean isStand;
+		protected int difficulte; // 1 = facile, 2 = moyen et 3 = difficile
+		
+
+		public Segment(TypeSegment pType, int vitesseMax, int pDifficulte) {
+			this.type = pType;
+			this.isStand = false;
+			this.difficulte = pDifficulte;
+			
+		}
+		
+		public Segment(TypeSegment pType, boolean pIsStand) {
+			this.type = pType;
+			this.isStand = pIsStand;
+		}
+		
+		public TypeSegment getType() {
+			return this.type;
+		}
+		
+		public void setType(TypeSegment pType) {
+			this.type = pType;
+		}
+		
+		public boolean isStand() {
+			return this.isStand;
+		}
+		
+		public void setStand(boolean pIsStand) {
+			this.isStand = pIsStand;
+		}
+}

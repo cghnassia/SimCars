@@ -1,0 +1,31 @@
+
+public abstract class Voiture {
+	protected int id; 
+	
+	protected int cVitesse;
+	
+	public static int VITESSE_MAX;
+	public static int CAPACITE_FREINAGE;
+	public static int HABILITE;
+		
+	public abstract boolean hasToFill();
+	
+	public int getType() {
+		return this.type;
+	}
+	
+	public void setId(int pType) {
+		this.type = pType;
+	}
+	
+	public int getCVitesse() {
+		return this.cVitesse;
+	}
+	
+	public void setCVitesse(int pCVitesse) {
+		this.cVitesse = pCVitesse;
+	}
+	
+	public abstract void accelere();
+	
+}

@@ -1,0 +1,15 @@
+
+public class VoitureElectrique extends Voiture {
+	
+	protected double niveauBatterie;
+	
+	public static final int VITESSE_MAX = 100;
+	
+	public VoitureElectrique() {
+		
+	}
+	
+	public boolean hasToFill() {
+		return this.niveauBatterie != 10.0;
+	}
+}

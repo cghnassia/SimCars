@@ -1,0 +1,11 @@
+import java.lang.reflect.Array;
+
+
+
+public class Circuit {
+	protected Array<Segment> segments;
+	
+	public Circuit() {
+		this.listeSegments = new List<Segment>();
+	}
+}

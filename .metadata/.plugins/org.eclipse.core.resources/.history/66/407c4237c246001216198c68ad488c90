@@ -1,0 +1,14 @@
+
+public class DepassementSegmentException extends Exception {
+	
+	protected double depassement;
+	
+	public DepassementSegmentException(double pDepassement) {
+		super(getClass.toString());
+		this.depassement = pDepassement;
+	}
+	
+	public double getDepassement() {
+		return this.depassement;
+	}
+}

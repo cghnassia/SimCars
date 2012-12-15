@@ -1,0 +1,19 @@
+
+public class VoitureEssence extends Voiture {
+	
+	protected double niveauReservoir;
+	
+	public static int VITESSE_MAX = 100;
+	public static int CAPACITE_FREINAGE = 30; 
+	public static int HABILITE = 30;
+	
+	public VoitureEssence(Position pCPosition) {
+		this.cVitesse = 0;
+		this.cPosition = pCPosition;
+	}
+	
+	public boolean hasToFill() {
+		return niveauReservoir < 10;
+	}
+	
+}

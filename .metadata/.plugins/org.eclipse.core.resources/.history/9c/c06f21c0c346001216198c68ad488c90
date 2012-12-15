@@ -1,0 +1,23 @@
+
+public abstract class Segment {
+		protected TypeSegment type;
+		protected boolean isStand;
+		
+
+		public Segment(TypeSemgent pType) {
+			this.type = pType;
+			this.isStand = false;
+		}
+		
+		public Segment(boolean pIsStand) {
+			this.isStand = pIsStand;
+		}
+		
+		public boolean isStand() {
+			return this.isStand;
+		}
+		
+		public void setStand(boolean pIsStand) {
+			this.isStand = pIsStand;
+		}
+}

@@ -1,0 +1,16 @@
+
+public class VoitureHybride extends Voiture {
+	
+	protected double niveauBatterie;
+	protected double niveauReservoir;
+	
+	public static int CAPACITE_FREINAGE;
+	public static int HABILITE;
+	
+	public static final int VITESSE_MAX = 100;
+	
+	public boolean hasToFill() {
+		return this.niveauBatterie < 10 && this.niveauReservoir < 10;
+	}
+
+}

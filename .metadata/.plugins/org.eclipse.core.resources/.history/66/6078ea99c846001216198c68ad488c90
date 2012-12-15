@@ -1,0 +1,16 @@
+
+public abstract class Moteur {
+	
+	public 
+	
+	public static int accelere(int vitesse) {
+		
+		int res;
+		
+		
+		
+		if(vitesse == MoteurEssence.VITESSE_MAX) {
+			res = vitesse;
+		}
+	}
+}

@@ -1,0 +1,12 @@
+
+public class VoitureEssence extends Voiture {
+	
+	protected double niveauReservoir;
+	
+	public static int VITESSE_MAX = 100;
+	
+	public boolean hasToFill() {
+		return niveauReservoir < 10;
+	}
+	
+}

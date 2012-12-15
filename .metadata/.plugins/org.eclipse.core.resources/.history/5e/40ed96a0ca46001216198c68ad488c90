@@ -1,0 +1,22 @@
+
+public class VoitureHybride extends Voiture {
+	
+	protected int cMoteur;
+	protected int vitesseMax;
+	protected double niveauBatterie;
+	protected double niveauReservoir;
+	
+	public static int MOTEUR_ESSENCE = 1;
+	public static int MOTEUR_ELECTRIQUE = 2;
+	
+	public VoitureHybride(Position pCPosition) {
+		this.type = Voiture.TYPE_VOITURE_HYBRIDE;
+		this.cVitesse = 0;
+		this.cPosition = pCPosition;
+	}
+	
+	public boolean hasToFill() {
+		return this.niveauBatterie < Voiture.NIVEAU_MIN && this.niveauReservoir < NIVEAU_MIN;
+	}
+
+}

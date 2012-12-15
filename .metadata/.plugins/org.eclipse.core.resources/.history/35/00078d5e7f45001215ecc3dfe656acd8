@@ -1,0 +1,8 @@
+
+public class Circuit {
+	protected List<Segment> listeSegments;
+	
+	public Circuit() {
+		this.listeSegments = new List<Segment>();
+	}
+}

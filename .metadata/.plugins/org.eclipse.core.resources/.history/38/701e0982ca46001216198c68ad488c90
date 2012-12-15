@@ -1,0 +1,32 @@
+
+public abstract class Voiture {
+	protected int type;
+	protected int cVitesse;
+	protected Moteur moteur;
+	protected Position cPosition;
+	
+	public static int TYPE_VOITURE_ESSENCE = 1;
+	public static int TYPE_VOITURE_ELECTRIQUE = 2;
+	public static int TYPE_VOITURE_HYBRIDE = 3;
+		
+	public abstract boolean hasToFill();
+	
+	public int getType() {
+		return this.type;
+	}
+	
+	public void setId(int pType) {
+		this.type = pType;
+	}
+	
+	public int getCVitesse() {
+		return this.cVitesse;
+	}
+	
+	public void setCVitesse(int pCVitesse) {
+		this.cVitesse = pCVitesse;
+	}
+	
+	public abstract void accelere();
+	
+}

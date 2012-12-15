@@ -1,0 +1,24 @@
+
+public class Position {
+	public Segment cSegment;
+	public double avancement;
+	
+	public Position() {
+		this.cSegment = null;
+		this.avancement = 0;
+	}
+	
+	public Position(Segment pCSegment) {
+		this.cSegment = pCSegment;
+		this.avancement = 0;
+	}
+	
+	public Position(Segment pCSegment, double pAvancement) {
+		this.cSegment = pCSegment;
+		this.avancement = pAvancement;
+	}
+	
+	public setPosition(Segment pCSegment, double avancement) {
+		
+	}
+}

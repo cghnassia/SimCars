@@ -1,0 +1,22 @@
+
+public class Moteur {
+	
+	protected TypeMoteur type;
+	protected int vitesseMax;
+	protected int acceleration;
+	
+	public Moteur(TypeMoteur pType) {
+		this.type = pType;
+	}
+	
+	public static int accelere(int vitesse) {
+		
+		int res;
+		
+		
+		
+		if(vitesse == MoteurEssence.VITESSE_MAX) {
+			res = vitesse;
+		}
+	}
+}

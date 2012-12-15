@@ -1,0 +1,7 @@
+
+public abstract class Config {
+	public static int MOTEUR_ESSENCE_VITESSE_MAX = 100;
+	public static int MOTEUR_ELECTRIQUE_VITESSE_MAX = 50;
+	
+	public static int 
+}

@@ -1,0 +1,19 @@
+
+public class VoitureElectrique extends Voiture {
+	
+	protected double niveauBatterie;
+	
+	public static int VITESSE_MAX = 70;
+	public static int CAPACITE_FREINAGE = 80; 
+	public static int HABILITE = 100;
+	
+	public VoitureElectrique(Position pCPosition)  {
+		this.type = Voiture.TYPE_VOITURE_ELECTRIQUE;
+		this.cVitesse = 0;
+		this.cPosition = pCPosition;
+	}
+	
+	public boolean hasToFill() {
+		return this.niveauBatterie < 10;
+	}
+}

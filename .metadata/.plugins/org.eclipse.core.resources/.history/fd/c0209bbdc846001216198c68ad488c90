@@ -1,0 +1,22 @@
+
+public class Moteur {
+	
+	protected TypeMoteur type;
+	protected int vitesseMax;
+	protected int acceleration:
+	protected int habilite;
+	/*public static final int VITESSE_MAX = 100;
+	public static final int ACCELERATION = 70;
+	public static final int HABILITE = 40;*/
+	
+	public static int accelere(int vitesse) {
+		
+		int res;
+		
+		
+		
+		if(vitesse == MoteurEssence.VITESSE_MAX) {
+			res = vitesse;
+		}
+	}
+}
