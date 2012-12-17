@@ -13,11 +13,15 @@ public class Course {
 		this.voitureHybride = null;
 	}
 	
-	public Course(Circuit pCircuit, VoitureElectrique pVoitureElectrique, VoitureEssence pVoitureEssence, VoitureHybride pVoitureHybride) {
+	public void init(Circuit pCircuit, VoitureElectrique pVoitureElectrique, VoitureEssence pVoitureEssence, VoitureHybride pVoitureHybride) {
 		this.circuit = pCircuit;
 		this.voitureElectrique = pVoitureElectrique;
 		this.voitureEssence = pVoitureEssence;
 		this.voitureHybride = pVoitureHybride;
+	}
+	
+	public void demarrer() {
+		
 	}
 	
 	public Circuit getCircuit() {

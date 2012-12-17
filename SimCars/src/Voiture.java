@@ -5,12 +5,16 @@ public abstract class Voiture {
 	protected Moteur moteur;
 	protected int habilite;
 	protected int freinage;
+	protected int nbTours;
 	
 	protected Course course;
 	protected int iSegment; 
 	protected Position cPosition;
 	protected int vitesseMaxSegment;
 	protected boolean isFreinage;
+	protected boolean hasToFill;
+	protected boolean hasFinished;
+	protected boolean isFilling;
 	
 	public static int TYPE_VOITURE_ESSENCE = 1;
 	public static int TYPE_VOITURE_ELECTRIQUE = 2;
@@ -35,10 +39,15 @@ public abstract class Voiture {
 	}
 	
 	public void update() {
-		int distanceParcourue  = (int) (((double) this.cVitesse) * ConfigGlobal.FPS_RATE);
-		updateVitesse(distanceParcourue);
-		updatePosition(distanceParcourue);
-		updateConsommation(distanceParcourue);
+		if(this.isFilling || this.hasFinished) {
+			this.cVitesse = 0;
+		}
+		else {
+			int distanceParcourue  = (int) (((double) this.cVitesse) * ConfigGlobal.FPS_RATE);
+			updatePosition(distanceParcourue);
+			updateVitesse(distanceParcourue);
+			updateConsommation(distanceParcourue);
+		}
 	}
 	
 	protected void updateVitesse(int distance) {
@@ -72,8 +81,22 @@ public abstract class Voiture {
 		}
 		catch (DepassementSegmentException e) {
 			this.iSegment++;
+			this.isFreinage = false;
 			this.cPosition.setSegment(this.course.getCircuit().getSegmentAt(this.iSegment));
-			updatePosition(e.depassement);
+			if(this.course.getCircuit().isLigneDarrivee(this.iSegment)) {
+				this.nbTours++;
+				if(this.nbTours >= this.course.getCircuit().getNbTours() ) {
+					this.hasFinished = true;
+					//this.course.hasFinished(this);
+				}
+			}
+			if (! hasFinished && hasToFill && this.course.getCircuit().getSegmentAt(iSegment).isStand ){
+					this.isFilling = true;
+			}
+			
+			if (! hasFinished && ! isFilling){
+				updatePosition(e.depassement);
+			}
 		}
 	}
 	
@@ -81,16 +104,24 @@ public abstract class Voiture {
 	
 	protected boolean isFreinage() {
 		boolean res;
-		if(isFreinage) {
+		//si on sait déja qu'il a freiné
+		if(this.isFreinage) {
 			res = true;
 		}
-		else {
+		//sinon on fait le calcul
+		else {			
 			Segment nextSegment = this.course.getCircuit().getSegmentAt(this.iSegment + 1);
-		
 			int distanceAvantSegment = Position.AVANCEMENT_MAX - this.cPosition.getAvancement();
-			int distanceNecessaire = calculeDistanceFreinage(this.cVitesse) - calculeDistanceFreinage(nextSegment.getVitesseMaxEffective(habilite));
-		
+			int distanceNecessaire;
+			//si la voiture doit s'arrêter sur le prochain segment
+			if(nextSegment.isStand() && hasToFill()) {
+				distanceNecessaire = calculeDistanceFreinage(this.cVitesse) - calculeDistanceFreinage(0);
+			}
+			else {
+				distanceNecessaire = calculeDistanceFreinage(this.cVitesse) - calculeDistanceFreinage(nextSegment.getVitesseMaxEffective(habilite));
+			}
 			if(distanceNecessaire <= distanceAvantSegment) {
+				this.isFreinage = true;
 				res = true;
 			}
 			else {

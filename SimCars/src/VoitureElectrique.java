@@ -1,6 +1,7 @@
 
 public class VoitureElectrique extends Voiture {
 	
+	
 	protected double niveauBatterie;
 	protected double niveauBatterieMax;
 	
@@ -14,11 +15,24 @@ public class VoitureElectrique extends Voiture {
 	}
 	
 	public boolean hasToFill() {
-		return this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN;
+		boolean res = false;
+		if(this.hasToFill) {
+			res = true;
+		}
+		else if (this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
+			res = true;
+			this.hasToFill = true;
+		}
+		
+		return res;
 	}
 	
 	protected void updateConsommation(int distance) {
 		this.niveauBatterie -= (ConfigMoteur.MOTEUR_ELECTRIQUE_CONSOMMATION * distance) * (this.cVitesse / this.moteur.getVitesseMax());
+	
+		if(this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
+			this.hasToFill = true;
+		}
 	}
 	
 	/*protected int getAutonomie() {

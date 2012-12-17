@@ -6,13 +6,17 @@ public abstract class Segment {
 		protected boolean isStand;
 		protected int difficulte; // 1 = facile, 2 = moyen et 3 = difficile
 		
+		protected int positionX;
+		protected int positionY;
+		
 
-		public Segment(TypeSegment pType, int pVitesseMax, int pDifficulte) {
+		public Segment(TypeSegment pType, int pVitesseMax, int pDifficulte, int pPositionX, int pPositionY) {
 			this.type = pType;
 			this.vitesseMax = pVitesseMax;
 			this.isStand = false;
 			this.difficulte = pDifficulte;
-			
+			this.positionX = pPositionX;
+			this.positionY = pPositionY;
 		}
 		
 		public Segment(TypeSegment pType, boolean pIsStand) {

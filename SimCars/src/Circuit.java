@@ -7,13 +7,14 @@ public class Circuit {
 	protected String description;
 	protected int nbTours;
 	protected ArrayList<Segment> segments;
+	protected MapCircuit map;
 	
 	public Circuit() {
 		this.segments = new ArrayList<Segment>();
 	}
 	
 	public Segment getSegmentAt(int i) {
-		return this.segments.get(i);
+		return this.segments.get(i % this.segments.size());
 	}
 	
 	public void setSegment(int i, Segment pSegment) {
@@ -50,5 +51,9 @@ public class Circuit {
 	
 	public void setDescription(String pDescription) {
 		this.description = pDescription;
+	}
+	
+	public boolean isLigneDarrivee(int i) {
+		return i == 0;
 	}
 }

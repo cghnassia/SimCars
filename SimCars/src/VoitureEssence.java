@@ -14,11 +14,24 @@ public class VoitureEssence extends Voiture {
 	}
 	
 	public boolean hasToFill() {
-		return niveauReservoir < ConfigVoiture.NIVEAU_RESERVOIR_MIN;
+		boolean res = false;
+		if(this.hasToFill) {
+			res = true;
+		}
+		else if (niveauReservoir < ConfigVoiture.NIVEAU_RESERVOIR_MIN) {
+			res = true;
+			this.hasToFill = true;
+		}
+		
+		return res;
 	}
 	
 	protected void updateConsommation(int distance) {
 		this.niveauReservoir -= (ConfigMoteur.MOTEUR_ESSENCE_CONSOMMATION * distance) * (this.cVitesse / this.moteur.getVitesseMax());
+	
+		if(this.niveauReservoir < ConfigVoiture.NIVEAU_RESERVOIR_MIN) {
+			this.hasToFill = true;
+		}
 	}
 	
 	/*protected int getAutonomie() {
