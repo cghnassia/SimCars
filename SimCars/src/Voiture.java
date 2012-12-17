@@ -6,7 +6,7 @@ public abstract class Voiture {
 	protected int habilite;
 	protected int freinage;
 	
-	protected Circuit circuit;
+	protected Course course;
 	protected int iSegment; 
 	protected Position cPosition;
 	protected int vitesseMaxSegment;
@@ -19,9 +19,7 @@ public abstract class Voiture {
 	public abstract boolean hasToFill();
 	
 	public int getType() {
-		return this.type;
-		
-		//Pour mettre à jour cPosition.getSegment().getVitesseMaxEffective(habilite);
+		return this.type;	
 	}
 	
 	public void setId(int pType) {
@@ -36,19 +34,31 @@ public abstract class Voiture {
 		this.cVitesse = pCVitesse;
 	}
 	
-	public void updateVitesse() {
+	public void update() {
+		int distanceParcourue  = (int) (((double) this.cVitesse) * ConfigGlobal.FPS_RATE);
+		updateVitesse(distanceParcourue);
+		updatePosition(distanceParcourue);
+		updateConsommation(distanceParcourue);
+	}
+	
+	protected void updateVitesse(int distance) {
 		//on regarde si on doit freiner
-		boolean freinage = true;
 		if(isFreinage()) {
-			//si oui on applique le freinage sur la distance parcourue entre deux appels (à définir)
-			this.cVitesse -= calculeVitesseFreinage(10, this.cVitesse);
+			//si oui on applique le freinage sur la distance parcourue entre deux appels (A MODIFIER)
+			this.cVitesse -= calculeVitesseFreinage(distance, this.cVitesse);
+			if(this.cVitesse < 0) {
+				this.cVitesse = 0;
+			}
 		}
 		else {
 			//on applique la vitesse potentielle maximum juste grâce au moteur
 			if(this.cVitesse < this.vitesseMaxSegment) {
-				this.cVitesse = this.moteur.getVitessePotentielle(this.cVitesse);
+				this.cVitesse += this.moteur.getAccelerationPotentielle(this.cVitesse) * distance;
 				if(this.cVitesse >= this.vitesseMaxSegment) {
 					this.cVitesse = this.vitesseMaxSegment;
+				}
+				if(this.cVitesse > this.moteur.getVitesseMax()) {
+					this.cVitesse = this.moteur.getVitesseMax();
 				}
 			}
 			
@@ -56,13 +66,26 @@ public abstract class Voiture {
 		
 	}
 	
-	public boolean isFreinage() {
+	protected void updatePosition(int distance) {
+		try {
+			cPosition.update(distance);
+		}
+		catch (DepassementSegmentException e) {
+			this.iSegment++;
+			this.cPosition.setSegment(this.course.getCircuit().getSegmentAt(this.iSegment));
+			updatePosition(e.depassement);
+		}
+	}
+	
+	protected abstract void updateConsommation(int distance);
+	
+	protected boolean isFreinage() {
 		boolean res;
 		if(isFreinage) {
 			res = true;
 		}
 		else {
-			Segment nextSegment = this.circuit.getSegmentAt(this.iSegment + 1);
+			Segment nextSegment = this.course.getCircuit().getSegmentAt(this.iSegment + 1);
 		
 			int distanceAvantSegment = Position.AVANCEMENT_MAX - this.cPosition.getAvancement();
 			int distanceNecessaire = calculeDistanceFreinage(this.cVitesse) - calculeDistanceFreinage(nextSegment.getVitesseMaxEffective(habilite));
@@ -78,13 +101,15 @@ public abstract class Voiture {
 		return res;
 	}
 	
+	/*protected abstract int getAutonomie();*/
+	
 	//Calcule la distance nécessaire pour freiner en fonction d'une vitesse
-	public int calculeDistanceFreinage(int vitesse) {
+	protected int calculeDistanceFreinage(int vitesse) {
 		return vitesse * (10 / freinage);
 	}
 	
 	//Calcule la vitesse lors d'un freinage en fonction d'une vitesse précédente et d'une distance
-	public int calculeVitesseFreinage(int distance, int vitesse) {
+	protected int calculeVitesseFreinage(int distance, int vitesse) {
 		int res = calculeDistanceFreinage(vitesse);
 		res -= distance;
 		

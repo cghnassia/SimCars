@@ -1,11 +1,11 @@
 
 public class DepassementSegmentException extends Exception {
 	
-	protected double depassement;
+	protected int depassement;
 	
 	private static final long serialVersionUID = 42L;
 	
-	public DepassementSegmentException(double pDepassement) {
+	public DepassementSegmentException(int pDepassement) {
 		super("DepassementSegmentException avec depassement de " + pDepassement);
 		this.depassement = pDepassement;
 	}

@@ -20,4 +20,36 @@ public class Course {
 		this.voitureHybride = pVoitureHybride;
 	}
 	
+	public Circuit getCircuit() {
+		return this.circuit;
+	}
+	
+	public void setCircuit(Circuit pCircuit) {
+		this.circuit = pCircuit;
+	}
+	
+	public VoitureElectrique getVoitureElectrique() {
+		return this.voitureElectrique;
+	}
+	
+	public void setVoitureElectrique(VoitureElectrique pVoitureElectrique) {
+		this.voitureElectrique = pVoitureElectrique;
+	}
+	
+	public VoitureEssence getVoitureEssence() {
+		return this.voitureEssence;
+	}
+	
+	public void setVoitureEssence(VoitureEssence pVoitureEssence) {
+		this.voitureEssence = pVoitureEssence;
+	}
+	
+	public VoitureHybride getVoitureHybride() {
+		return this.voitureHybride;
+	}
+	
+	public void setVoitureHybride(VoitureHybride pVoitureHybride) {
+		this.voitureHybride = pVoitureHybride;
+	}
+	
 }
