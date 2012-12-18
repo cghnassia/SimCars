@@ -28,19 +28,21 @@ public class Moteur {
 		return this.vitesseMax;
 	}
 	
-	public int getAccelerationPotentielle(int vitesse) {
+	public double getAccelerationPotentielle(int vitesse) {
 		
-		int res;
+		double res;
 		
 		if(vitesse == this.vitesseMax) {
 			res = 0;
 		}
 		else {
-			res = this.acceleration * this.vitesseMax/(vitesse + 1);
+			res = this.acceleration * Math.pow(this.vitesseMax - vitesse, 2) / Math.pow(this.vitesseMax, 2);
 			if(res + vitesse > vitesseMax) {
 				res = vitesseMax - vitesse;
 			}
 		}
+		
+		//System.out.println("getAcceleration potentielle : " + res);
 
 		return res;
 	}

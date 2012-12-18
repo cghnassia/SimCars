@@ -4,23 +4,32 @@ public abstract class Voiture {
 	protected int cVitesse;
 	protected Moteur moteur;
 	protected int habilite;
-	protected int freinage;
+	protected double freinage;
 	protected int nbTours;
+	protected int vitesseRechargement;
 	
 	protected Course course;
 	protected int iSegment; 
 	protected Position cPosition;
 	protected int vitesseMaxSegment;
-	protected boolean isFreinage;
 	protected boolean hasToFill;
 	protected boolean hasFinished;
 	protected boolean isFilling;
+	protected int cDureeRechargement;
 	
 	public static int TYPE_VOITURE_ESSENCE = 1;
 	public static int TYPE_VOITURE_ELECTRIQUE = 2;
 	public static int TYPE_VOITURE_HYBRIDE = 3;
 		
 	public abstract boolean hasToFill();
+	
+	public void init() {
+		this.cPosition = new Position(this.course.getCircuit().getSegmentDepart());
+		this.vitesseMaxSegment = this.cPosition.getSegment().getVitesseMaxEffective(this.habilite);
+		this.hasToFill = false;
+		this.hasFinished = false;
+		this.isFilling = false;
+	}
 	
 	public int getType() {
 		return this.type;	
@@ -41,9 +50,14 @@ public abstract class Voiture {
 	public void update() {
 		if(this.isFilling || this.hasFinished) {
 			this.cVitesse = 0;
+			recharger();
 		}
 		else {
 			int distanceParcourue  = (int) (((double) this.cVitesse) * ConfigGlobal.FPS_RATE);
+			if(distanceParcourue == 0) {
+				distanceParcourue = 1;
+			}
+			//System.out.println("distance parcourue : " + distanceParcourue);
 			updatePosition(distanceParcourue);
 			updateVitesse(distanceParcourue);
 			updateConsommation(distanceParcourue);
@@ -52,9 +66,10 @@ public abstract class Voiture {
 	
 	protected void updateVitesse(int distance) {
 		//on regarde si on doit freiner
-		if(isFreinage()) {
+		if(this.isFreinage()) {
+			//System.out.println("On doit freiner");
 			//si oui on applique le freinage sur la distance parcourue entre deux appels (A MODIFIER)
-			this.cVitesse -= calculeVitesseFreinage(distance, this.cVitesse);
+			this.cVitesse = calculeVitesseFreinage(distance, this.cVitesse);
 			if(this.cVitesse < 0) {
 				this.cVitesse = 0;
 			}
@@ -62,7 +77,7 @@ public abstract class Voiture {
 		else {
 			//on applique la vitesse potentielle maximum juste grâce au moteur
 			if(this.cVitesse < this.vitesseMaxSegment) {
-				this.cVitesse += this.moteur.getAccelerationPotentielle(this.cVitesse) * distance;
+				this.cVitesse += this.moteur.getAccelerationPotentielle(this.cVitesse) * (distance + 1);
 				if(this.cVitesse >= this.vitesseMaxSegment) {
 					this.cVitesse = this.vitesseMaxSegment;
 				}
@@ -73,6 +88,8 @@ public abstract class Voiture {
 			
 		}
 		
+		//System.out.println("vitesse : " + cVitesse);
+		
 	}
 	
 	protected void updatePosition(int distance) {
@@ -81,16 +98,28 @@ public abstract class Voiture {
 		}
 		catch (DepassementSegmentException e) {
 			this.iSegment++;
-			this.isFreinage = false;
-			this.cPosition.setSegment(this.course.getCircuit().getSegmentAt(this.iSegment));
+			try {
+				this.cPosition.setPosition(this.course.getCircuit().getSegmentAt(this.iSegment), 0);
+			}
+			catch(DepassementSegmentException e2) {
+				System.out.println("Erreur lors de changement de section");
+			}
+			
+			System.out.println("Tour " + nbTours + " - Segment : " + iSegment + " - Stand : " + this.cPosition.getSegment().isStand());
+			
+			this.vitesseMaxSegment = this.cPosition.getSegment().getVitesseMaxEffective(this.habilite);
 			if(this.course.getCircuit().isLigneDarrivee(this.iSegment)) {
+				System.out.println("On a fait un tour !");
 				this.nbTours++;
 				if(this.nbTours >= this.course.getCircuit().getNbTours() ) {
 					this.hasFinished = true;
-					//this.course.hasFinished(this);
+					this.course.hasFinished(this);
+					System.out.print("Course finie !");
 				}
 			}
 			if (! hasFinished && hasToFill && this.course.getCircuit().getSegmentAt(iSegment).isStand ){
+					System.out.println("Remplissage en cours");
+					this.hasToFill = false;
 					this.isFilling = true;
 			}
 			
@@ -104,39 +133,35 @@ public abstract class Voiture {
 	
 	protected boolean isFreinage() {
 		boolean res;
-		//si on sait déja qu'il a freiné
-		if(this.isFreinage) {
+		Segment nextSegment = this.course.getCircuit().getSegmentAt(this.iSegment + 1);
+		int distanceAvantSegment = Position.AVANCEMENT_MAX - this.cPosition.getAvancement();
+		int distanceNecessaire;
+		
+		//si la voiture doit s'arrêter sur le prochain segment
+		if(nextSegment.isStand() && hasToFill()) {
+			distanceNecessaire = calculeDistanceFreinage(this.cVitesse);
+		}
+		else {
+			//System.out.println("calcule distance Freinage : " + calculeDistanceFreinage(this.cVitesse));
+			distanceNecessaire = calculeDistanceFreinage(this.cVitesse) - calculeDistanceFreinage(nextSegment.getVitesseMaxEffective(habilite));
+		}
+		if(distanceNecessaire >= distanceAvantSegment) {
 			res = true;
 		}
-		//sinon on fait le calcul
-		else {			
-			Segment nextSegment = this.course.getCircuit().getSegmentAt(this.iSegment + 1);
-			int distanceAvantSegment = Position.AVANCEMENT_MAX - this.cPosition.getAvancement();
-			int distanceNecessaire;
-			//si la voiture doit s'arrêter sur le prochain segment
-			if(nextSegment.isStand() && hasToFill()) {
-				distanceNecessaire = calculeDistanceFreinage(this.cVitesse) - calculeDistanceFreinage(0);
-			}
-			else {
-				distanceNecessaire = calculeDistanceFreinage(this.cVitesse) - calculeDistanceFreinage(nextSegment.getVitesseMaxEffective(habilite));
-			}
-			if(distanceNecessaire <= distanceAvantSegment) {
-				this.isFreinage = true;
-				res = true;
-			}
-			else {
-				res = false;
-			}
+		else {
+			res = false;
 		}
+		
+		//pour que les autres fonctions n'ai pas à refaire le calcul
 		
 		return res;
 	}
 	
-	/*protected abstract int getAutonomie();*/
+	protected abstract void recharger();
 	
 	//Calcule la distance nécessaire pour freiner en fonction d'une vitesse
 	protected int calculeDistanceFreinage(int vitesse) {
-		return vitesse * (10 / freinage);
+		return (int) (vitesse * (10 / freinage));
 	}
 	
 	//Calcule la vitesse lors d'un freinage en fonction d'une vitesse précédente et d'une distance
@@ -144,9 +169,11 @@ public abstract class Voiture {
 		int res = calculeDistanceFreinage(vitesse);
 		res -= distance;
 		
-		res *= (freinage / 10);
+		res = (int) ((freinage / 10) * res);
 		
-		return res;
+		//System.out.println("Freinage avec vitesse de : " + vitesse + " après distance de " + distance + " donne : " + res);
+		
+		return res;		
 	}
 	
 }

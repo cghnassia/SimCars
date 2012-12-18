@@ -9,7 +9,8 @@ public class Circuit {
 	protected ArrayList<Segment> segments;
 	protected MapCircuit map;
 	
-	public Circuit() {
+	public Circuit(int pNbTours) {
+		this.nbTours = pNbTours;
 		this.segments = new ArrayList<Segment>();
 	}
 	
@@ -53,7 +54,11 @@ public class Circuit {
 		this.description = pDescription;
 	}
 	
+	public Segment getSegmentDepart() {
+		return this.segments.get(0);
+	}
+	
 	public boolean isLigneDarrivee(int i) {
-		return i == 0;
+		return (i % segments.size()) == 0;
 	}
 }

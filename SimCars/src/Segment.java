@@ -1,27 +1,19 @@
+import java.awt.Point;
 
-public abstract class Segment {
+
+public class Segment {
 	
-		protected TypeSegment type;
 		protected int vitesseMax; 
 		protected boolean isStand;
 		protected int difficulte; // 1 = facile, 2 = moyen et 3 = difficile
 		
-		protected int positionX;
-		protected int positionY;
-		
+		protected Point position;
 
-		public Segment(TypeSegment pType, int pVitesseMax, int pDifficulte, int pPositionX, int pPositionY) {
-			this.type = pType;
+		public Segment(int pVitesseMax, int pDifficulte, boolean isStand, Point pPosition) {
 			this.vitesseMax = pVitesseMax;
 			this.isStand = false;
 			this.difficulte = pDifficulte;
-			this.positionX = pPositionX;
-			this.positionY = pPositionY;
-		}
-		
-		public Segment(TypeSegment pType, boolean pIsStand) {
-			this.type = pType;
-			this.isStand = pIsStand;
+			this.position = pPosition;
 		}
 		
 		public int getVitesseMax() {
@@ -40,14 +32,6 @@ public abstract class Segment {
 			}
 
 			return res;
-		}
-		
-		public TypeSegment getType() {
-			return this.type;
-		}
-		
-		public void setType(TypeSegment pType) {
-			this.type = pType;
 		}
 		
 		public boolean isStand() {
