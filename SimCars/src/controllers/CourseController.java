@@ -1,14 +1,19 @@
-import javax.swing.JFrame;
+package controllers;
 
+import views.CourseView;
+import models.Circuit;
+import models.CourseModel;
+import models.SegmentFactory;
+import models.TypeSegment;
+import models.VoitureElectrique;
+import models.VoitureEssence;
+import models.VoitureHybride;
 
-public class CourseMain extends JFrame {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Course course = new Course();
+public class CourseController {
+	protected CourseModel courseModel;
+	protected CourseView courseView;
+	
+	public CourseController() {
 		
 		//construction du circuit
 		Circuit circuit = new Circuit(3);
@@ -37,14 +42,30 @@ public class CourseMain extends JFrame {
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, true, 3, 0));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, false, 2, 0));
 		
-		VoitureElectrique voitureElectrique = new VoitureElectrique(course);
-		VoitureEssence voitureEssence = new VoitureEssence(course);
-		VoitureHybride voitureHybride = new VoitureHybride(course);
+		this.courseModel = new CourseModel(this);
+		this.courseView = new CourseView(this);
 		
-		course.init(circuit, voitureElectrique, voitureEssence, voitureHybride);
+		VoitureElectrique voitureElectrique = new VoitureElectrique(this.courseModel);
+		VoitureEssence voitureEssence = new VoitureEssence(this.courseModel);
+		VoitureHybride voitureHybride = new VoitureHybride(this.courseModel);
+		
+		courseModel.init(circuit, voitureElectrique, voitureEssence, voitureHybride);
+		courseView.init();
 		
 		//demarrer la course
-		course.demarrer();
+		//courseModel.demarrer();
+		
 	}
-
+	
+	public Circuit getCircuit() {
+		return courseModel.getCircuit();
+	}
+	
+	public CourseModel getCourseModel() {
+		return this.courseModel;
+	}
+	
+	public CourseView getCourseView() {
+		return this.courseView;
+	}
 }

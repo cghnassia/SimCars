@@ -1,3 +1,4 @@
+package models;
 
 public class VoitureElectrique extends Voiture {
 	
@@ -5,7 +6,7 @@ public class VoitureElectrique extends Voiture {
 	protected double niveauBatterie;
 	protected double niveauBatterieMax;
 	
-	public VoitureElectrique(Course pCourse)  {
+	public VoitureElectrique(CourseModel pCourse)  {
 		this.course = pCourse;
 		this.type = Voiture.TYPE_VOITURE_ELECTRIQUE;
 		this.cVitesse = 0;
@@ -18,29 +19,33 @@ public class VoitureElectrique extends Voiture {
 	}
 	
 	public boolean hasToFill() {
-		boolean res = false;
+		/*boolean res = false;
 		if(this.hasToFill) {
 			res = true;
 		}
 		else if (this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
 			res = true;
 			this.hasToFill = true;
-		}
+		}*/
 		
-		return res;
+		return this.hasToFill;
 	}
 	
 	protected void updateConsommation(int distance) {
 		//System.out.println("distance : " + distance);
 		this.niveauBatterie -= (ConfigMoteur.MOTEUR_ELECTRIQUE_CONSOMMATION * distance) * (this.cVitesse / this.moteur.getVitesseMax());	
-		
-		if(this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
-			this.hasToFill = true;
-		}
 	}
 	
 	protected void recharger() {
 		
+	}
+	
+	protected void afficher() {
+		
+	}
+	
+	protected int getAutonomie() {
+		return (int) (this.niveauBatterie / ConfigMoteur.MOTEUR_ELECTRIQUE_CONSOMMATION);
 	}
 	
 	/*protected int getAutonomie() {

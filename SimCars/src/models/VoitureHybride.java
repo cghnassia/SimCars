@@ -1,3 +1,4 @@
+package models;
 
 public class VoitureHybride extends Voiture {
 	
@@ -6,7 +7,7 @@ public class VoitureHybride extends Voiture {
 	protected double niveauBatterieMax;
 	protected double niveauReservoirMax;
 	
-	public VoitureHybride(Course pCourse) {
+	public VoitureHybride(CourseModel pCourse) {
 		this.course = pCourse;
 		this.type = Voiture.TYPE_VOITURE_HYBRIDE;
 		this.cVitesse = 0;
@@ -20,42 +21,45 @@ public class VoitureHybride extends Voiture {
 	}
 	
 	public boolean hasToFill() {
-		boolean res = false;
+		/*boolean res = false;
 		if(this.hasToFill) {
 			res = true;
 		}
 		else if (this.niveauBatterie < ConfigVoiture.NIVEAU_RESERVOIR_MIN && this.niveauReservoir < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
 			res = true;
 			this.hasToFill = true;
-		}
+		}*/
 		
-		return res; 
+		return this.hasToFill; 
 	}
 	
 	public void switchMoteur(TypeMoteur pMoteur) {
 		this.moteur = new Moteur(pMoteur);
 	}
 	
+	//A CHANGER (QUAND SWITCHER EXACTEMENT ???)
 	public void updateConsommation(int distance) {
 		if(this.moteur.getType() == TypeMoteur.TYPE_ESSENCE) {
 			this.niveauReservoir -= (ConfigMoteur.MOTEUR_ESSENCE_CONSOMMATION * distance) * ((double) this.cVitesse / this.moteur.getVitesseMax());
 			loadBatterie(distance);
 			
-			if(this.niveauReservoir < ConfigVoiture.NIVEAU_RESERVOIR_MIN && this.niveauBatterie > ConfigVoiture.NIVEAU_RESERVOIR_MIN) {
+			if(this.niveauReservoir < 0) {
+				this.niveauReservoir = 0;
 				switchMoteur(TypeMoteur.TYPE_ELECTRIQUE);
 			}
 		}
 		else { //this.moteur.getType() == TypeMoteur.TYPE_ELECTRIQUE
 			this.niveauBatterie -= (ConfigMoteur.MOTEUR_ELECTRIQUE_CONSOMMATION * distance) * ((double) this.cVitesse / this.moteur.getVitesseMax());
 		
-			if(this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN && this.niveauReservoir > ConfigVoiture.NIVEAU_RESERVOIR_MIN) {
+			if(this.niveauBatterie < 0) {
+				this.niveauBatterie = 0;
 				switchMoteur(TypeMoteur.TYPE_ESSENCE);
 			}
 		}
 		
-		if(this.niveauReservoir < ConfigVoiture.NIVEAU_RESERVOIR_MIN && this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
+		/*if(this.niveauReservoir < ConfigVoiture.NIVEAU_RESERVOIR_MIN && this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
 			this.hasToFill = true;
-		}
+		}*/
 		
 		//mettre ˆ jour la batterie
 		//changer de moteur si nŽcessaire
@@ -86,6 +90,20 @@ public class VoitureHybride extends Voiture {
 		if(this.niveauReservoir == ConfigVoiture.NIVEAU_HYBRIDE_RESERVOIR_MAX && this.niveauBatterie == ConfigVoiture.NIVEAU_HYBRIDE_BATTERIE_MAX) {
 			this.isFilling = false;
 		}
+	}
+	
+	public void afficher() {
+		
+	}
+	
+	protected int getAutonomie() {
+		int res;
+	
+		res = (int) (this.niveauReservoir / ConfigMoteur.MOTEUR_ESSENCE_CONSOMMATION);
+		res += (int) (res * ConfigMoteur.HYBRIDE_RECHARGE_BATTERIE);
+		res += (int) (this.niveauBatterie / ConfigMoteur.MOTEUR_ELECTRIQUE_CONSOMMATION);
+		
+		return res;
 	}
 
 }

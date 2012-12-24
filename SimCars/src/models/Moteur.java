@@ -1,9 +1,10 @@
+package models;
 
 public class Moteur {
 	
 	protected TypeMoteur type;
 	protected int vitesseMax;
-	protected int acceleration;
+	protected double acceleration;
 	protected double consommation;
 	
 	public Moteur(TypeMoteur pType) {
@@ -15,7 +16,7 @@ public class Moteur {
 		}
 		else {
 			this.vitesseMax = ConfigMoteur.MOTEUR_ELECTRIQUE_VITESSE_MAX;
-			this.vitesseMax = ConfigMoteur.MOTEUR_ELECTRIQUE_ACCELERATION;
+			this.acceleration = ConfigMoteur.MOTEUR_ELECTRIQUE_ACCELERATION;
 			this.consommation = ConfigMoteur.MOTEUR_ELECTRIQUE_CONSOMMATION;
 		}
 	}

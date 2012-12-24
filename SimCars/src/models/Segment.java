@@ -1,17 +1,20 @@
+package models;
 import java.awt.Point;
 
 
 public class Segment {
 	
+		protected TypeSegment type;
 		protected int vitesseMax; 
 		protected boolean isStand;
 		protected int difficulte; // 1 = facile, 2 = moyen et 3 = difficile
 		
 		protected Point position;
 
-		public Segment(int pVitesseMax, int pDifficulte, boolean isStand, Point pPosition) {
+		public Segment(TypeSegment pType, int pVitesseMax, int pDifficulte, boolean pIsStand, Point pPosition) {
+			this.type = pType;
 			this.vitesseMax = pVitesseMax;
-			this.isStand = false;
+			this.isStand = pIsStand;
 			this.difficulte = pDifficulte;
 			this.position = pPosition;
 		}
@@ -28,7 +31,7 @@ public class Segment {
 				res = this.vitesseMax;
 			}
 			else {
-				res = (int) (2 / habilite) * this.vitesseMax;
+				res = (int) (((double) habilite / ((difficulte - 1)* 100)) * this.vitesseMax);
 			}
 
 			return res;
@@ -41,4 +44,17 @@ public class Segment {
 		public void setStand(boolean pIsStand) {
 			this.isStand = pIsStand;
 		}
+		
+		public Point getPosition() {
+			return this.position;
+		}
+		
+		public void setPosition(Point p) {
+			this.position = p;
+		}
+		
+		public TypeSegment getType() {
+			return this.type;
+		}
+
 }

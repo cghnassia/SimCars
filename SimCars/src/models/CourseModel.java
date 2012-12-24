@@ -1,10 +1,14 @@
+package models;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import controllers.CourseController;
 
-public class Course implements ActionListener {
+
+public class CourseModel implements ActionListener {
+	protected CourseController courseController;
 	protected Circuit circuit;
 	
 	protected VoitureElectrique voitureElectrique;
@@ -13,7 +17,8 @@ public class Course implements ActionListener {
 	
 	protected Timer timer;
 	
-	public Course() {
+	public CourseModel(CourseController pCourseController) {
+		this.courseController = pCourseController;
 		this.circuit = null;
 		this.voitureElectrique = null;
 		this.voitureEssence = null;
@@ -21,7 +26,7 @@ public class Course implements ActionListener {
 		
 		//this.timer = new Timer((int)ConfigGlobal.FPS_RATE * 1000, this);
 		this.timer = new Timer(100, this);
-		}
+	}
 	
 	public void init(Circuit pCircuit, VoitureElectrique pVoitureElectrique, VoitureEssence pVoitureEssence, VoitureHybride pVoitureHybride) {
 		this.circuit = pCircuit;

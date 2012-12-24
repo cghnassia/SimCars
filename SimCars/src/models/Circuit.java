@@ -1,3 +1,4 @@
+package models;
 import java.util.ArrayList;
 
 
@@ -61,4 +62,26 @@ public class Circuit {
 	public boolean isLigneDarrivee(int i) {
 		return (i % segments.size()) == 0;
 	}
+	
+	public int getLongueur() {
+		return this.segments.size();
+	}
+	
+	public int getNextStand(int iSegment) {
+		int res = 0;
+		for(int i = 0; i < getLongueur(); i++) {
+			if(getSegmentAt(iSegment + i).isStand()) {
+				res = iSegment + i;
+				break;
+			}
+		}
+		
+		return res;
+	}
+	
+	public MapCircuit getMap() {
+		return this.map;
+	}
+	
+	
 }
