@@ -1,13 +1,13 @@
 package models;
 
 public abstract class Voiture {
-	protected int type;
+	protected TypeVoiture type;
 	protected int cVitesse;
 	protected Moteur moteur;
 	protected int habilite;
 	protected double freinage;
 	protected int nbTours;
-	protected int vitesseRechargement;
+	protected double vitesseRechargement;
 	
 	protected CourseModel course;
 	protected int iSegment; 
@@ -17,10 +17,6 @@ public abstract class Voiture {
 	protected boolean hasFinished;
 	protected boolean isFilling;
 	protected int cDureeRechargement;
-	
-	public static int TYPE_VOITURE_ESSENCE = 1;
-	public static int TYPE_VOITURE_ELECTRIQUE = 2;
-	public static int TYPE_VOITURE_HYBRIDE = 3;
 		
 	public abstract boolean hasToFill();
 	
@@ -30,15 +26,13 @@ public abstract class Voiture {
 		this.hasToFill = false;
 		this.hasFinished = false;
 		this.isFilling = false;
-		
-		CalculeArretStand();
 	}
 	
-	public int getType() {
+	public TypeVoiture getType() {
 		return this.type;	
 	}
 	
-	public void setId(int pType) {
+	public void setId(TypeVoiture pType) {
 		this.type = pType;
 	}
 	
@@ -48,6 +42,10 @@ public abstract class Voiture {
 	
 	public void setCVitesse(int pCVitesse) {
 		this.cVitesse = pCVitesse;
+	}
+	
+	public Position getPosition() {
+		return this.cPosition;
 	}
 	
 	public void update() {
@@ -85,7 +83,7 @@ public abstract class Voiture {
 		else {
 			//on applique la vitesse potentielle maximum juste gr‰ce au moteur
 			if(this.cVitesse < this.vitesseMaxSegment) {
-				System.out.println("ACCELERATION POTENTIELLE : " +  this.moteur.getAccelerationPotentielle(this.cVitesse) * (distance + 1));
+				//System.out.println("ACCELERATION POTENTIELLE : " +  this.moteur.getAccelerationPotentielle(this.cVitesse) * (distance + 1));
 				this.cVitesse += this.moteur.getAccelerationPotentielle(this.cVitesse) * (distance + 1) + 1;
 				if(this.cVitesse >= this.vitesseMaxSegment) {
 					this.cVitesse = this.vitesseMaxSegment;
@@ -103,10 +101,78 @@ public abstract class Voiture {
 	
 	protected void updatePosition(int distance) {
 		try {
+			if (this.hasToFill && ! this.hasFinished && this.course.getCircuit().getSegmentAt(iSegment).isStand && this.cPosition.getAvancement() >= 50) {
+				this.hasToFill = false;
+				this.isFilling = true;
+			}
 			cPosition.update(distance);
 		}
 		catch (DepassementSegmentException e) {
 			this.iSegment = (this.iSegment + 1) % this.course.getCircuit().getLongueur();
+			
+			TypeSegment typeSegment = this.course.getCircuit().getSegmentAt(this.iSegment).getType();
+			Direction direction = this.cPosition.getDirection();
+			switch(typeSegment) {
+				case TYPE_STRAIGHT_HORIZONTAL: 
+				case TYPE_HARD_HORIZONTAL:
+					if(direction.getDestination() == TypeDirection.LEFT) {
+						direction.setOrigine(TypeDirection.RIGHT);
+					}
+					else {	//direction.getDestination() == TypeDirection.RIGHT
+						direction.setOrigine(TypeDirection.LEFT);
+					}
+					break;
+				case TYPE_STRAIGHT_VERTICAL:
+				case TYPE_HARD_VERTICAL:
+					if(direction.getDestination() == TypeDirection.TOP) {
+						direction.setOrigine(TypeDirection.BOTTOM);
+					}
+					else {	//direction.getDestination() == TypeDirection.BOTTOM
+						direction.setOrigine(TypeDirection.TOP);
+					}
+					break;
+				case TYPE_TURN_TOP_TO_LEFT:
+					if(direction.getDestination() == TypeDirection.BOTTOM) {
+						direction.setOrigine(TypeDirection.TOP);
+						direction.setDestination(TypeDirection.LEFT);
+					}	
+					else {	//direction.getDestination() == TypeDirection.RIGHT
+						direction.setOrigine(TypeDirection.LEFT);
+						direction.setDestination(TypeDirection.TOP);
+					}
+					break;
+				case TYPE_TURN_TOP_TO_RIGHT:
+					if(direction.getDestination() == TypeDirection.BOTTOM) {
+						direction.setOrigine(TypeDirection.TOP);
+						direction.setDestination(TypeDirection.RIGHT);
+					}	
+					else {	//direction.getDestination() == TypeDirection.LEFT
+						direction.setOrigine(TypeDirection.RIGHT);
+						direction.setDestination(TypeDirection.TOP);
+					}
+					break;
+				case TYPE_TURN_BOTTOM_TO_LEFT:
+					if(direction.getDestination() == TypeDirection.RIGHT) {
+						direction.setOrigine(TypeDirection.LEFT);
+						direction.setDestination(TypeDirection.BOTTOM);
+					}	
+					else {	//direction.getDestination() == TypeDirection.TOP
+						direction.setOrigine(TypeDirection.BOTTOM);
+						direction.setDestination(TypeDirection.LEFT);
+					}
+					break;
+				case TYPE_TURN_BOTTOM_TO_RIGHT:
+					if(direction.getDestination() == TypeDirection.BOTTOM) {
+						direction.setOrigine(TypeDirection.BOTTOM);
+						direction.setDestination(TypeDirection.RIGHT);
+					}	
+					else {	//direction.getDestination() == TypeDirection.LEFT
+						direction.setOrigine(TypeDirection.RIGHT);
+						direction.setDestination(TypeDirection.BOTTOM);
+					}
+					break;
+			}
+			
 			try {
 				this.cPosition.setPosition(this.course.getCircuit().getSegmentAt(this.iSegment), 0);
 			}
@@ -115,8 +181,8 @@ public abstract class Voiture {
 			}
 			
 			//System.out.println("Tour " + nbTours + " - Segment : " + iSegment + " - Stand : " + this.cPosition.getSegment().isStand());
-			
 			this.vitesseMaxSegment = this.cPosition.getSegment().getVitesseMaxEffective(this.habilite);
+			
 			if(this.course.getCircuit().isLigneDarrivee(this.iSegment)) {
 				//System.out.println("On a fait un tour !");
 				this.nbTours++;
@@ -126,17 +192,11 @@ public abstract class Voiture {
 					//System.out.print("Course finie !");
 				}
 			}
-			if (! hasFinished && this.course.getCircuit().getSegmentAt(iSegment).isStand ){
-				if(hasToFill) {
-					//System.out.println("Remplissage en cours");
-					this.hasToFill = false;
-					this.isFilling = true;
-				}	
-				else {
-					CalculeArretStand();
-				}
+			else {
+				CalculeArretStand();
+
 			}
-			if (! hasFinished && ! isFilling){
+			if (! hasFinished && ! isFilling) {
 				updatePosition(e.depassement);
 			}
 		}
@@ -196,9 +256,20 @@ public abstract class Voiture {
 	protected void CalculeArretStand() {
 		int prochainStand1 = this.course.getCircuit().getNextStand(this.iSegment + 1);
 		int prochainStand2 = this.course.getCircuit().getNextStand(prochainStand1 + 1);
-		int distance = ConfigCircuit.LONGUEUR_SEGMENT * (((prochainStand2 - this.iSegment) + this.course.getCircuit().getLongueur()) % this.course.getCircuit().getLongueur()) * ConfigCircuit.NB_CASES_HEIGHT;
-		if(getAutonomie() > distance) {
+		int finCircuit = this.course.getCircuit().getLongueur() * (this.course.getCircuit().getNbTours() - this.nbTours - 1) + this.course.getCircuit().getLongueur() - this.iSegment ;
+		
+		int distanceStand = (((prochainStand2 - this.iSegment) + this.course.getCircuit().getLongueur()) * ConfigCircuit.LONGUEUR_SEGMENT) % (this.course.getCircuit().getLongueur() * ConfigCircuit.LONGUEUR_SEGMENT);
+		int distanceFin = (((finCircuit - this.iSegment) + this.course.getCircuit().getLongueur()) * ConfigCircuit.LONGUEUR_SEGMENT) % (this.course.getCircuit().getLongueur() * ConfigCircuit.LONGUEUR_SEGMENT);
+		
+		if(getAutonomie() < distanceFin && getAutonomie() < distanceStand) {
 			this.hasToFill = true;
+		}
+		else {
+			//this.hasToFill = false;
+		}
+		
+		if(this.type == TypeVoiture.VOITURE_HYBRIDE) {
+			//System.out.println("autonomie : " + getAutonomie() + " distance au stand d'aprs : " + distance + " hasToFill : " + this.hasToFill + " isFilling : " + this.isFilling);
 		}
 		//voir si il peut atteindre le stand d'aprs...
 	}

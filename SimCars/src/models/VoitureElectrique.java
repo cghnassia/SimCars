@@ -8,7 +8,7 @@ public class VoitureElectrique extends Voiture {
 	
 	public VoitureElectrique(CourseModel pCourse)  {
 		this.course = pCourse;
-		this.type = Voiture.TYPE_VOITURE_ELECTRIQUE;
+		this.type = TypeVoiture.VOITURE_ELECTRIQUE;
 		this.cVitesse = 0;
 		this.habilite = ConfigVoiture.VOITURE_ELECTRIQUE_HABILITE;
 		this.niveauBatterieMax = ConfigVoiture.NIVEAU_ELECTRIQUE_BATTERIE_MAX;
@@ -37,7 +37,11 @@ public class VoitureElectrique extends Voiture {
 	}
 	
 	protected void recharger() {
-		
+		this.niveauBatterie += this.vitesseRechargement * ConfigGlobal.FPS_RATE;
+		if(this.niveauBatterie >= ConfigVoiture.NIVEAU_ESSENCE_RESERVOIR_MAX) {
+			this.niveauBatterie = ConfigVoiture.NIVEAU_ESSENCE_RESERVOIR_MAX;
+			this.isFilling = false;
+		}
 	}
 	
 	protected void afficher() {

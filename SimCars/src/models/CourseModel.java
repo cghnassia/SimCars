@@ -1,13 +1,11 @@
 package models;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.Timer;
+import java.awt.event.ActionListener;
 
 import controllers.CourseController;
 
 
-public class CourseModel implements ActionListener {
+public class CourseModel implements Runnable {
 	protected CourseController courseController;
 	protected Circuit circuit;
 	
@@ -15,7 +13,7 @@ public class CourseModel implements ActionListener {
 	protected VoitureEssence voitureEssence;
 	protected VoitureHybride voitureHybride;
 	
-	protected Timer timer;
+	protected boolean continuer;
 	
 	public CourseModel(CourseController pCourseController) {
 		this.courseController = pCourseController;
@@ -23,9 +21,6 @@ public class CourseModel implements ActionListener {
 		this.voitureElectrique = null;
 		this.voitureEssence = null;
 		this.voitureHybride = null;
-		
-		//this.timer = new Timer((int)ConfigGlobal.FPS_RATE * 1000, this);
-		this.timer = new Timer(100, this);
 	}
 	
 	public void init(Circuit pCircuit, VoitureElectrique pVoitureElectrique, VoitureEssence pVoitureEssence, VoitureHybride pVoitureHybride) {
@@ -40,9 +35,23 @@ public class CourseModel implements ActionListener {
 		this.voitureHybride.init();
 	}
 	
-	public void demarrer() {
-		System.out.println("démarrer course");
-		this.timer.start();
+	public void update() {
+		voitureEssence.update();
+		voitureElectrique.update();
+		voitureHybride.update();
+	}
+	
+	public void run() {
+		this.continuer = true;
+		while(this.continuer) {
+			update();
+			try {
+				Thread.currentThread().sleep((int) (ConfigGlobal.FPS_RATE * 1000));
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public Circuit getCircuit() {
@@ -54,7 +63,7 @@ public class CourseModel implements ActionListener {
 	}
 	
 	public void hasFinished(Voiture voiture) {
-		this.timer.stop();
+		//this.timer.stop();
 	}
 	
 	public VoitureElectrique getVoitureElectrique() {
@@ -81,12 +90,6 @@ public class CourseModel implements ActionListener {
 		this.voitureHybride = pVoitureHybride;
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		//System.out.println("action Performed timer");
-		
-		voitureEssence.update();
-		//voitureElectrique.update();
-		//voitureHybride.update();
-	}
+	
 	
 }

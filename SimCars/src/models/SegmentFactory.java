@@ -26,9 +26,11 @@ public class SegmentFactory {
 				case TYPE_HARD_HORIZONTAL:
 				case TYPE_HARD_VERTICAL:
 					res = new Segment(type, 50, 3, isStand, position);
+					break;
 				default: //TYPE_NONE
 					//erreur c'est pas possible
 					res = null;
+					break;
 			}
 			
 			return res;

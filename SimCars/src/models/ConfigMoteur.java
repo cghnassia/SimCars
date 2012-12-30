@@ -7,7 +7,7 @@ public abstract class ConfigMoteur {
 	public static double MOTEUR_ESSENCE_ACCELERATION = 2.5;
 	public static double MOTEUR_ELECTRIQUE_ACCELERATION = 1.5; 
 	
-	public static double MOTEUR_ESSENCE_CONSOMMATION = 0.015;
-	public static double MOTEUR_ELECTRIQUE_CONSOMMATION = 0.010;
-	public static double HYBRIDE_RECHARGE_BATTERIE = 0.005;
+	public static double MOTEUR_ESSENCE_CONSOMMATION = 0.035;
+	public static double MOTEUR_ELECTRIQUE_CONSOMMATION = 0.025;
+	public static double HYBRIDE_RECHARGE_BATTERIE = 0.015;
 }

@@ -7,7 +7,7 @@ public class VoitureEssence extends Voiture {
 	
 	public VoitureEssence(CourseModel pCourse) {
 		this.course = pCourse;
-		this.type = Voiture.TYPE_VOITURE_ESSENCE;
+		this.type = TypeVoiture.VOITURE_ESSENCE;
 		this.cVitesse = 0;
 		this.habilite = ConfigVoiture.VOITURE_ESSENCE_HABILITE;
 		this.niveauReservoirMax = ConfigVoiture.NIVEAU_ESSENCE_RESERVOIR_MAX;
@@ -45,12 +45,11 @@ public class VoitureEssence extends Voiture {
 		if(this.niveauReservoir >= ConfigVoiture.NIVEAU_ESSENCE_RESERVOIR_MAX) {
 			this.niveauReservoir = ConfigVoiture.NIVEAU_ESSENCE_RESERVOIR_MAX;
 			this.isFilling = false;
-			CalculeArretStand();
 		}
 	}
 	
 	protected void afficher() {
-		System.out.println("--------Voiture essence----------------------");
+		/*System.out.println("--------Voiture essence----------------------");
 		System.out.println("Position : " + this.iSegment + " ("  + this.cPosition.getAvancement() + "/100)" + " Stand : " + this.course.getCircuit().getSegmentAt(iSegment).isStand);
 		System.out.println("Vitesse : " + this.cVitesse);
 		System.out.println("Vitesse max sur le segment : " + this.course.getCircuit().getSegmentAt(this.iSegment).vitesseMax);
@@ -59,11 +58,11 @@ public class VoitureEssence extends Voiture {
 		System.out.println("Niveau de réservoir : " + this.niveauReservoir); 
 		System.out.println("Doit faire le plein : " + this.hasToFill);
 		System.out.println("Fait le plein : " + this.isFilling);
-		System.out.println("--------------------------------------------\n");
+		System.out.println("--------------------------------------------\n");*/
 	}
 	
 	protected int getAutonomie() {
-		return (int) (this.niveauReservoir / ConfigMoteur.MOTEUR_ESSENCE_CONSOMMATION);
+		return (int) ((double) this.niveauReservoir / ConfigMoteur.MOTEUR_ESSENCE_CONSOMMATION);
 	}
 	
 }

@@ -8,15 +8,15 @@ public class DisplayVoitureProperties {
 	/**
 	 * @param args
 	 */
-	protected int rotation;
+	protected double rotation;
 	protected Point position;
 	
-	public DisplayVoitureProperties(int pRotation, Point pPosition) {
+	public DisplayVoitureProperties(double pRotation, Point pPosition) {
 		this.rotation = pRotation;
 		this.position = pPosition;
 	}
 	
-	public int getRotation() {
+	public double getRotation() {
 		return this.rotation;
 	}
 

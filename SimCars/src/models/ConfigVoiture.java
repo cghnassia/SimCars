@@ -6,17 +6,17 @@ public abstract class ConfigVoiture {
 	public static final int VOITURE_HYRIDE_HABILITE = 40;
 	
 	//public static final int NIVEAU_ESSENCE_RESERVOIR_MAX = 100;
-	public static final int NIVEAU_ESSENCE_RESERVOIR_MAX = 30;
-	public static final int NIVEAU_ELECTRIQUE_BATTERIE_MAX = 150;
+	public static final int NIVEAU_ESSENCE_RESERVOIR_MAX = 100;
+	public static final int NIVEAU_ELECTRIQUE_BATTERIE_MAX = 100;
 	public static final int NIVEAU_HYBRIDE_RESERVOIR_MAX = 50;
-	public static final int NIVEAU_HYBRIDE_BATTERIE_MAX = 100;
+	public static final int NIVEAU_HYBRIDE_BATTERIE_MAX = 50;
 	
 	public static final int NIVEAU_RESERVOIR_MIN = 10;
 	public static final int NIVEAU_BATTERIE_MIN = 5;
 	
-	public static final int VITESSE_RECHARGEMENT_ESSENCE = 15; 		//quantité rechargée par secondes
-	public static final int VITESSE_RECHARGEMENT_ELECTRIQUE = 20;		//quantité rechargée par secondes
-	public static final int VITESSE_RECHARGEMENT_HYBRIDE = 10;		//quantité rechargée par secondes
+	public static final double VITESSE_RECHARGEMENT_ESSENCE = 1; 		//quantité rechargée par seconde
+	public static final double VITESSE_RECHARGEMENT_ELECTRIQUE = 5;		//quantité rechargée par secode
+	public static final double VITESSE_RECHARGEMENT_HYBRIDE = 3;		//quantité rechargée par seconde
 	
 	public static final double ESSENCE_FREINAGE = 15;
 	public static final double ELECTRIQUE_FREINAGE = 25;

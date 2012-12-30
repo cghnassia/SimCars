@@ -9,7 +9,7 @@ public class VoitureHybride extends Voiture {
 	
 	public VoitureHybride(CourseModel pCourse) {
 		this.course = pCourse;
-		this.type = Voiture.TYPE_VOITURE_HYBRIDE;
+		this.type = TypeVoiture.VOITURE_HYBRIDE;
 		this.cVitesse = 0;
 		this.habilite = ConfigVoiture.VOITURE_HYRIDE_HABILITE;
 		this.niveauReservoirMax = ConfigVoiture.NIVEAU_HYBRIDE_RESERVOIR_MAX;
@@ -18,6 +18,7 @@ public class VoitureHybride extends Voiture {
 		this.moteur = new Moteur(TypeMoteur.TYPE_ELECTRIQUE);
 		this.niveauReservoir = this.niveauReservoirMax;
 		this.niveauBatterie = this.niveauBatterieMax;
+		this.vitesseRechargement = ConfigVoiture.VITESSE_RECHARGEMENT_HYBRIDE;
 	}
 	
 	public boolean hasToFill() {
@@ -56,14 +57,6 @@ public class VoitureHybride extends Voiture {
 				switchMoteur(TypeMoteur.TYPE_ESSENCE);
 			}
 		}
-		
-		/*if(this.niveauReservoir < ConfigVoiture.NIVEAU_RESERVOIR_MIN && this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
-			this.hasToFill = true;
-		}*/
-		
-		//mettre ˆ jour la batterie
-		//changer de moteur si nŽcessaire
-		//alerter qu'il faut s'arreter si plus beaucoup de carbueant
 	}
 	
 	//chargement de la batterie lorsque la voiture utilise le moteur essence
@@ -93,7 +86,19 @@ public class VoitureHybride extends Voiture {
 	}
 	
 	public void afficher() {
-		
+		String moteurString;
+		if(this.moteur.getType() == TypeMoteur.TYPE_ESSENCE) {
+			moteurString = "essence";
+		}
+		else {
+			moteurString = "electrique";
+		}
+		/*System.out.println("***************VOITURE_HYBRIDE*******************");
+		System.out.println("Moteur : " + moteurString + " - Vitesse : " + this.cVitesse);
+		System.out.println("Carburant " + this.niveauReservoir + " - Batterie : " + this.niveauBatterie);
+		System.out.println("hasToFill : " + this.hasToFill + " - isFilling : " + this.isFilling);
+		System.out.println("isStand : " + this.course.getCircuit().getSegmentAt(iSegment).isStand + " - avancement : " + this.cPosition.getAvancement() + " - hasFinished : " + this.hasFinished);
+		System.out.println("--------------------------------------------------");*/
 	}
 	
 	protected int getAutonomie() {

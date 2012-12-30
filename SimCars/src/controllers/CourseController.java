@@ -1,7 +1,13 @@
 package controllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import views.CourseView;
 import models.Circuit;
+import models.ConfigGlobal;
 import models.CourseModel;
 import models.SegmentFactory;
 import models.TypeSegment;
@@ -22,17 +28,17 @@ public class CourseController {
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_VERTICAL, false, 0, 1));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_VERTICAL, false, 0, 2));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_VERTICAL, false, 0, 3));
-		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_TURN_TOP_TO_LEFT, false, 0, 4));
+		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_TURN_TOP_TO_RIGHT, false, 0, 4));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, false, 1, 4));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, false, 2, 4));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, false, 3, 4));
-		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, false, 4, 4));
+		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_HARD_HORIZONTAL, false, 4, 4));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, true, 5, 4));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, false, 6, 4));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, false, 7, 4));
-		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_TURN_BOTTOM_TO_LEFT, false, 8, 4));
+		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_TURN_TOP_TO_LEFT, false, 8, 4));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_VERTICAL, false, 8, 3));
-		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_VERTICAL, false, 8, 2));
+		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_HARD_VERTICAL, false, 8, 2));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_VERTICAL, false, 8, 1));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_TURN_BOTTOM_TO_LEFT, false, 8, 0));
 		circuit.addSegment(SegmentFactory.getSegment(TypeSegment.TYPE_STRAIGHT_HORIZONTAL, false, 7, 0));
@@ -52,13 +58,6 @@ public class CourseController {
 		courseModel.init(circuit, voitureElectrique, voitureEssence, voitureHybride);
 		courseView.init();
 		
-		//demarrer la course
-		//courseModel.demarrer();
-		
-	}
-	
-	public Circuit getCircuit() {
-		return courseModel.getCircuit();
 	}
 	
 	public CourseModel getCourseModel() {
@@ -67,5 +66,13 @@ public class CourseController {
 	
 	public CourseView getCourseView() {
 		return this.courseView;
+	}
+	
+	public void demarrer() {
+		Thread threadView = new Thread(courseView, "courseView");
+		Thread threadModel = new Thread(courseModel, "courseModel");
+		
+		threadView.start();
+		threadModel.start();
 	}
 }
