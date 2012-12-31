@@ -14,11 +14,10 @@ public abstract class ConfigVoiture {
 	public static final int NIVEAU_RESERVOIR_MIN = 10;
 	public static final int NIVEAU_BATTERIE_MIN = 5;
 	
-	public static final double VITESSE_RECHARGEMENT_ESSENCE = 1; 		//quantité rechargée par seconde
-	public static final double VITESSE_RECHARGEMENT_ELECTRIQUE = 5;		//quantité rechargée par secode
-	public static final double VITESSE_RECHARGEMENT_HYBRIDE = 3;		//quantité rechargée par seconde
+	public static final double VITESSE_RECHARGEMENT_ESSENCE = 5; 		//quantité rechargée par seconde
+	public static final double VITESSE_RECHARGEMENT_ELECTRIQUE = 10;	//quantité rechargée par secode
 	
-	public static final double ESSENCE_FREINAGE = 15;
-	public static final double ELECTRIQUE_FREINAGE = 25;
-	public static final double HYBRIDE_FREINAGE = 22;
+	public static final double ESSENCE_FREINAGE = 1.5;
+	public static final double ELECTRIQUE_FREINAGE = 3;
+	public static final double HYBRIDE_FREINAGE = 2.2;
 }

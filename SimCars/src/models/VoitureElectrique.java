@@ -5,6 +5,7 @@ public class VoitureElectrique extends Voiture {
 	
 	protected double niveauBatterie;
 	protected double niveauBatterieMax;
+	protected double vitesseRechargement;
 	
 	public VoitureElectrique(CourseModel pCourse)  {
 		this.course = pCourse;
@@ -18,17 +19,12 @@ public class VoitureElectrique extends Voiture {
 		this.niveauBatterie = this.niveauBatterieMax;
 	}
 	
-	public boolean hasToFill() {
-		/*boolean res = false;
-		if(this.hasToFill) {
-			res = true;
-		}
-		else if (this.niveauBatterie < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
-			res = true;
-			this.hasToFill = true;
-		}*/
-		
-		return this.hasToFill;
+	public double getNiveauBatterie() {
+		return this.niveauBatterie;
+	}
+	
+	public double getNiveauBatterieMax() {
+		return this.niveauBatterieMax;
 	}
 	
 	protected void updateConsommation(int distance) {

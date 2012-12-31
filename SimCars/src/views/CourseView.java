@@ -1,87 +1,54 @@
 package views;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
-import models.ConfigCircuit;
-import models.ConfigGlobal;
-import models.DisplayVoitureProperties;
-import models.DisplayVoiturePropertiesFactory;
-import models.Segment;
-import models.TypeSegment;
-import models.TypeVoiture;
-import models.VoitureEssence;
+import javax.swing.JPanel;
 
 import controllers.CourseController;
 
-public class CourseView extends JLayeredPane implements Runnable{
-		
-		protected CourseController courseController;
-		
-		protected CircuitView circuitView;
-		protected VoitureView voitureEssenceView;
-		protected VoitureView voitureElectriqueView;
-		protected VoitureView voitureHybrideView;
-		boolean continuer;
+import models.ConfigCircuit;
+import models.ConfigGlobal;
 
-		public CourseView(CourseController pCourseController) {
-			super();
-			this.courseController = pCourseController;
-			
-			this.circuitView = new CircuitView();
-			this.voitureEssenceView = new VoitureView(TypeVoiture.VOITURE_ESSENCE);
-			this.voitureElectriqueView = new VoitureView(TypeVoiture.VOITURE_ELECTRIQUE);
-			this.voitureHybrideView = new VoitureView(TypeVoiture.VOITURE_HYBRIDE);
-			
-			add(this.circuitView, 1);
-			add(this.voitureElectriqueView, 0);
-			add(this.voitureHybrideView, 0);
-			add(this.voitureEssenceView, 0);
-		}
+public class CourseView extends JPanel implements Runnable {
+	
+	protected boolean continuer;
+	protected CourseController courseController;
+	protected CarteView carteView;
+	protected ParametresView parametresView;
+	
+	public CourseView(CourseController pCourseController) {
+		super(new BorderLayout());
 		
-		public void init() {
-			Segment segmentDepart;
-			DisplayVoitureProperties dvp;
-			
-			circuitView.init(this.courseController.getCourseModel().getCircuit());
-			
-			/*segmentDepart = this.courseController.getCourseModel().getCircuit().getSegmentAt(0);
-			
-			dvp = DisplayVoiturePropertiesFactory.getDisplayVoitureProperties(segmentDepart.getType(), DisplayVoiturePropertiesFactory.VOITURE_ESSENCE, DisplayVoiturePropertiesFactory.SENS_NORMAL, 0); 
-			voitureEssenceView.moveVoiture(segmentDepart.getPosition().x, segmentDepart.getPosition().y, dvp.getPosition().x, dvp.getPosition().y, dvp.getRotation());
-			
-			dvp = DisplayVoiturePropertiesFactory.getDisplayVoitureProperties(segmentDepart.getType(), DisplayVoiturePropertiesFactory.VOITURE_ELECTRIQUE, DisplayVoiturePropertiesFactory.SENS_NORMAL, 0); 
-			voitureElectriqueView.moveVoiture(segmentDepart.getPosition().x, segmentDepart.getPosition().y, dvp.getPosition().x, dvp.getPosition().y, dvp.getRotation());
-			
-			dvp = DisplayVoiturePropertiesFactory.getDisplayVoitureProperties(segmentDepart.getType(), DisplayVoiturePropertiesFactory.VOITURE_HYBRIDE, DisplayVoiturePropertiesFactory.SENS_NORMAL, 0); 
-			voitureHybrideView.moveVoiture(segmentDepart.getPosition().x, segmentDepart.getPosition().y, dvp.getPosition().x, dvp.getPosition().y, dvp.getRotation());*/
-			
-			//repaint();
-			
-			update();
-		}
+		this.courseController = pCourseController;
 		
-		public void run() {
-			this.continuer = true;
-			while(this.continuer) {
-				update();
-				try {
-					Thread.currentThread().sleep((int) (ConfigGlobal.FPS_RATE * 1000));
-				}
-				catch(InterruptedException e) {
-					e.printStackTrace();
-				}
+		this.carteView = new CarteView(this.courseController);
+		this.parametresView = new ParametresView(this.courseController);
+		
+		add(this.carteView, BorderLayout.CENTER);
+		add(this.parametresView, BorderLayout.EAST);
+		
+		/*this.setPreferredSize(new Dimension(ConfigCircuit.NB_CASES_WIDTH * ConfigCircuit.WIDTH_CASE + 300, ConfigCircuit.NB_CASES_HEIGHT * ConfigCircuit.WIDTH_CASE));
+		this.setBounds(0, 0, getWidth(), getHeight());
+		this.repaint();
+		this.carteView.repaint();
+		this.parametresView.repaint();*/
+	}
+	
+	public void run() {
+		this.carteView.init();
+		this.parametresView.init();
+		this.continuer = true;
+		
+		while(this.continuer) {
+			try {
+				Thread.currentThread().sleep((int) (ConfigGlobal.FPS_RATE * 1000));
 			}
+			catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+			carteView.update();
+			parametresView.update();
 		}
-		
-		public void update() {
-			this.voitureEssenceView.updatePosition(this.courseController.getCourseModel().getVoitureEssence().getPosition());
-			this.voitureElectriqueView.updatePosition(this.courseController.getCourseModel().getVoitureElectrique().getPosition());
-			this.voitureHybrideView.updatePosition(this.courseController.getCourseModel().getVoitureHybride().getPosition());
-		}
-		
-		
-		
+	}
 }

@@ -1,13 +1,10 @@
 package controllers;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.Timer;
+import java.awt.Dimension;
 
 import views.CourseView;
 import models.Circuit;
-import models.ConfigGlobal;
 import models.CourseModel;
 import models.SegmentFactory;
 import models.TypeSegment;
@@ -18,6 +15,9 @@ import models.VoitureHybride;
 public class CourseController {
 	protected CourseModel courseModel;
 	protected CourseView courseView;
+	
+	protected Thread threadModel;
+	protected Thread threadView;
 	
 	public CourseController() {
 		
@@ -56,7 +56,9 @@ public class CourseController {
 		VoitureHybride voitureHybride = new VoitureHybride(this.courseModel);
 		
 		courseModel.init(circuit, voitureElectrique, voitureEssence, voitureHybride);
-		courseView.init();
+		
+		this.threadView = new Thread(courseView, "courseView");
+		this.threadModel = new Thread(courseModel, "courseModel");
 		
 	}
 	
@@ -69,8 +71,6 @@ public class CourseController {
 	}
 	
 	public void demarrer() {
-		Thread threadView = new Thread(courseView, "courseView");
-		Thread threadModel = new Thread(courseModel, "courseModel");
 		
 		threadView.start();
 		threadModel.start();

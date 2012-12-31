@@ -41,8 +41,8 @@ public class CircuitView extends JPanel {
 		this.segments.add(chargerImageSegment(ConfigCircuit.IMAGE_HARD_VERTICAL));
 		this.segments.add(chargerImageSegment(ConfigCircuit.IMAGE_STAND));
 		
-		this.setPreferredSize(new Dimension(ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT));
-		this.setBounds(0, 0, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT);
+		setPreferredSize(new Dimension(ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT));
+		setBounds(0, 0, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT);
 	}
 	
 	public void init(Circuit circuit) {

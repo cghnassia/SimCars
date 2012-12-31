@@ -37,13 +37,13 @@ public class VoitureView extends JPanel {
 		BufferedImage voiture;
 		switch(this.type) {
 			case VOITURE_ESSENCE:
-				voiture = chargerImageVoiture(VoitureView.IMAGE_VOITURE_ESSENCE);
+				voiture = ChargementImage.chargerImage(VoitureView.IMAGE_VOITURE_ESSENCE);
 				break;
 			case VOITURE_ELECTRIQUE:
-				voiture = chargerImageVoiture(VoitureView.IMAGE_VOITURE_ELECTRIQUE);
+				voiture = ChargementImage.chargerImage(VoitureView.IMAGE_VOITURE_ELECTRIQUE);
 				break;
 			case VOITURE_HYBRIDE : //VOITURE_HYBRIDE
-				voiture = chargerImageVoiture(VoitureView.IMAGE_VOITURE_HYBRIDE);
+				voiture = ChargementImage.chargerImage(VoitureView.IMAGE_VOITURE_HYBRIDE);
 				break;
 			default:
 				voiture = null;
@@ -64,17 +64,6 @@ public class VoitureView extends JPanel {
 		this.add(jlb);*/
 	}
 	
-	protected BufferedImage chargerImageVoiture(String location) {
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new File(location));
-		} catch (IOException e) {
-			System.out.println("Erreur lors du chargement de : " +  location);
-			e.printStackTrace();
-		}
-		
-		return img;
-	}
 	
 	public void updatePosition(Position position) {
 		Segment segment = position.getSegment();

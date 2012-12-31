@@ -4,6 +4,7 @@ public class VoitureEssence extends Voiture {
 	
 	protected double niveauReservoir;
 	protected double niveauReservoirMax;
+	protected double vitesseRechargement;
 	
 	public VoitureEssence(CourseModel pCourse) {
 		this.course = pCourse;
@@ -11,22 +12,19 @@ public class VoitureEssence extends Voiture {
 		this.cVitesse = 0;
 		this.habilite = ConfigVoiture.VOITURE_ESSENCE_HABILITE;
 		this.niveauReservoirMax = ConfigVoiture.NIVEAU_ESSENCE_RESERVOIR_MAX;
+		this.niveauReservoir = this.niveauReservoirMax;
 		this.vitesseRechargement = ConfigVoiture.VITESSE_RECHARGEMENT_ESSENCE;
 		this.freinage = ConfigVoiture.ESSENCE_FREINAGE;
 		this.moteur = new Moteur(TypeMoteur.TYPE_ESSENCE);
 		this.niveauReservoir = this.niveauReservoirMax;
 	}
 	
-	public boolean hasToFill() {
-		/*boolean res = false;
-		if(this.hasToFill) {
-			res = true;
-		}
-		else if (niveauReservoir < ConfigVoiture.NIVEAU_RESERVOIR_MIN) {
-			res = true;
-		}*/
-		
-		return this.hasToFill;
+	public double getNiveauReservoir() {
+		return this.niveauReservoir;
+	}
+	
+	public double getNiveauReservoirMax() {
+		return this.niveauReservoirMax;
 	}
 	
 	protected void updateConsommation(int distance) {

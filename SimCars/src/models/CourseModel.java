@@ -45,6 +45,7 @@ public class CourseModel implements Runnable {
 		this.continuer = true;
 		while(this.continuer) {
 			update();
+			updateClassement();
 			try {
 				Thread.currentThread().sleep((int) (ConfigGlobal.FPS_RATE * 1000));
 			}
@@ -88,6 +89,42 @@ public class CourseModel implements Runnable {
 	
 	public void setVoitureHybride(VoitureHybride pVoitureHybride) {
 		this.voitureHybride = pVoitureHybride;
+	}
+	
+	public void updateClassement() {
+		int distanceVoitureEssence = this.voitureEssence.getDistanceParcourue();
+		int distanceVoitureElectrique = this.voitureElectrique.getDistanceParcourue();
+		int distanceVoitureHybride = this.voitureHybride.getDistanceParcourue();
+		
+		if(distanceVoitureEssence >= distanceVoitureElectrique && distanceVoitureEssence >= distanceVoitureHybride) {
+			this.voitureEssence.setClassement(0);
+		}
+		else if(distanceVoitureEssence < distanceVoitureElectrique && distanceVoitureEssence < distanceVoitureHybride) {
+			this.voitureEssence.setClassement(2);
+		}
+		else {
+			this.voitureEssence.setClassement(1);
+		}
+		
+		if(distanceVoitureElectrique >= distanceVoitureEssence && distanceVoitureElectrique >= distanceVoitureHybride) {
+			this.voitureElectrique.setClassement(0);
+		}
+		else if(distanceVoitureElectrique < distanceVoitureEssence && distanceVoitureElectrique < distanceVoitureHybride) {
+			this.voitureElectrique.setClassement(2);
+		}
+		else {
+			this.voitureElectrique.setClassement(1);
+		}
+		
+		if(distanceVoitureHybride >= distanceVoitureEssence && distanceVoitureHybride >= distanceVoitureElectrique) {
+			this.voitureHybride.setClassement(0);
+		}
+		else if(distanceVoitureHybride < distanceVoitureEssence && distanceVoitureHybride < distanceVoitureElectrique) {
+			this.voitureHybride.setClassement(2);
+		}
+		else {
+			this.voitureHybride.setClassement(1);
+		}
 	}
 	
 	

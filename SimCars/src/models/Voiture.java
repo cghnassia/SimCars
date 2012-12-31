@@ -2,12 +2,12 @@ package models;
 
 public abstract class Voiture {
 	protected TypeVoiture type;
-	protected int cVitesse;
+	protected double cVitesse;
 	protected Moteur moteur;
 	protected int habilite;
 	protected double freinage;
 	protected int nbTours;
-	protected double vitesseRechargement;
+	protected int classement;
 	
 	protected CourseModel course;
 	protected int iSegment; 
@@ -17,8 +17,6 @@ public abstract class Voiture {
 	protected boolean hasFinished;
 	protected boolean isFilling;
 	protected int cDureeRechargement;
-		
-	public abstract boolean hasToFill();
 	
 	public void init() {
 		this.cPosition = new Position(this.course.getCircuit().getSegmentDepart());
@@ -26,6 +24,7 @@ public abstract class Voiture {
 		this.hasToFill = false;
 		this.hasFinished = false;
 		this.isFilling = false;
+		this.classement = 0;
 	}
 	
 	public TypeVoiture getType() {
@@ -36,7 +35,7 @@ public abstract class Voiture {
 		this.type = pType;
 	}
 	
-	public int getCVitesse() {
+	public double getCVitesse() {
 		return this.cVitesse;
 	}
 	
@@ -46,6 +45,30 @@ public abstract class Voiture {
 	
 	public Position getPosition() {
 		return this.cPosition;
+	}
+	
+	public boolean hasToFill() {
+		return this.hasToFill;
+	}
+	
+	public boolean isFilling() {
+		return this.isFilling;
+	}
+	
+	public int getNbTours() {
+		return this.nbTours;
+	}
+	
+	public int getNbToursTotal() {
+		return this.course.getCircuit().getNbTours();
+	}
+	
+	public int getClassement() {
+		return this.classement;
+	}
+	
+	public void setClassement(int pClassement) {
+		this.classement = pClassement;
 	}
 	
 	public void update() {
@@ -64,9 +87,9 @@ public abstract class Voiture {
 			}
 			
 			//System.out.println("distance parcourue : " + distanceParcourue);
-			updatePosition(distanceParcourue);
 			updateVitesse(distanceParcourue);
 			updateConsommation(distanceParcourue);
+			updatePosition(distanceParcourue);
 		}
 	}
 	
@@ -99,13 +122,16 @@ public abstract class Voiture {
 		
 	}
 	
+	
 	protected void updatePosition(int distance) {
 		try {
 			if (this.hasToFill && ! this.hasFinished && this.course.getCircuit().getSegmentAt(iSegment).isStand && this.cPosition.getAvancement() >= 50) {
 				this.hasToFill = false;
 				this.isFilling = true;
 			}
+		else {
 			cPosition.update(distance);
+			}
 		}
 		catch (DepassementSegmentException e) {
 			this.iSegment = (this.iSegment + 1) % this.course.getCircuit().getLongueur();
@@ -171,6 +197,8 @@ public abstract class Voiture {
 						direction.setDestination(TypeDirection.BOTTOM);
 					}
 					break;
+				case TYPE_NONE:
+					break;
 			}
 			
 			try {
@@ -211,8 +239,9 @@ public abstract class Voiture {
 		int distanceNecessaire;
 		
 		//si la voiture doit s'arrêter sur le prochain segment
-		if(nextSegment.isStand() && hasToFill()) {
+		if((nextSegment.isStand() || this.course.getCircuit().getSegmentAt(this.iSegment).isStand()) && hasToFill()) {
 			distanceNecessaire = calculeDistanceFreinage(this.cVitesse);
+			distanceAvantSegment = ConfigCircuit.LONGUEUR_SEGMENT / 2;
 		}
 		else {
 			//System.out.println("calcule distance Freinage : " + calculeDistanceFreinage(this.cVitesse));
@@ -225,8 +254,6 @@ public abstract class Voiture {
 			res = false;
 		}
 		
-		//pour que les autres fonctions n'ai pas à refaire le calcul
-		
 		return res;
 	}
 	
@@ -237,12 +264,12 @@ public abstract class Voiture {
 	protected abstract int getAutonomie();
 	
 	//Calcule la distance nécessaire pour freiner en fonction d'une vitesse
-	protected int calculeDistanceFreinage(int vitesse) {
+	protected int calculeDistanceFreinage(double vitesse) {
 		return (int) (vitesse * (10 / freinage));
 	}
 	
 	//Calcule la vitesse lors d'un freinage en fonction d'une vitesse précédente et d'une distance
-	protected int calculeVitesseFreinage(int distance, int vitesse) {
+	protected int calculeVitesseFreinage(int distance, double vitesse) {
 		int res = calculeDistanceFreinage(vitesse);
 		res -= distance;
 		
@@ -272,6 +299,10 @@ public abstract class Voiture {
 			//System.out.println("autonomie : " + getAutonomie() + " distance au stand d'après : " + distance + " hasToFill : " + this.hasToFill + " isFilling : " + this.isFilling);
 		}
 		//voir si il peut atteindre le stand d'après...
+	}
+	
+	public int getDistanceParcourue() {
+		return (this.nbTours * this.course.getCircuit().getLongueur() + this.iSegment) * ConfigCircuit.LONGUEUR_SEGMENT + cPosition.avancement;
 	}
 	
 }

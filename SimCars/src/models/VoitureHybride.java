@@ -7,6 +7,9 @@ public class VoitureHybride extends Voiture {
 	protected double niveauBatterieMax;
 	protected double niveauReservoirMax;
 	
+	protected double vitesseRechargementEssence;
+	protected double vitesseRechargementElectrique;
+	
 	public VoitureHybride(CourseModel pCourse) {
 		this.course = pCourse;
 		this.type = TypeVoiture.VOITURE_HYBRIDE;
@@ -18,27 +21,35 @@ public class VoitureHybride extends Voiture {
 		this.moteur = new Moteur(TypeMoteur.TYPE_ELECTRIQUE);
 		this.niveauReservoir = this.niveauReservoirMax;
 		this.niveauBatterie = this.niveauBatterieMax;
-		this.vitesseRechargement = ConfigVoiture.VITESSE_RECHARGEMENT_HYBRIDE;
+		this.vitesseRechargementEssence = ConfigVoiture.VITESSE_RECHARGEMENT_ESSENCE;
+		this.vitesseRechargementElectrique = ConfigVoiture.VITESSE_RECHARGEMENT_ELECTRIQUE;
 	}
 	
-	public boolean hasToFill() {
-		/*boolean res = false;
-		if(this.hasToFill) {
-			res = true;
-		}
-		else if (this.niveauBatterie < ConfigVoiture.NIVEAU_RESERVOIR_MIN && this.niveauReservoir < ConfigVoiture.NIVEAU_BATTERIE_MIN) {
-			res = true;
-			this.hasToFill = true;
-		}*/
-		
-		return this.hasToFill; 
+	public double getNiveauReservoir() {
+		return this.niveauReservoir;
+	}
+	
+	public double getNiveauBatterie() {
+		return this.niveauBatterie;
+	}
+	
+	public double getNiveauReservoirMax() {
+		return this.niveauReservoirMax;
+	}
+	
+	public double getNiveauBatterieMax() {
+		return this.niveauBatterieMax;
+	}
+	
+	public Moteur getMoteur() {
+		return this.moteur;
 	}
 	
 	public void switchMoteur(TypeMoteur pMoteur) {
 		this.moteur = new Moteur(pMoteur);
 	}
 	
-	//A CHANGER (QUAND SWITCHER EXACTEMENT ???)
+
 	public void updateConsommation(int distance) {
 		if(this.moteur.getType() == TypeMoteur.TYPE_ESSENCE) {
 			this.niveauReservoir -= (ConfigMoteur.MOTEUR_ESSENCE_CONSOMMATION * distance) * ((double) this.cVitesse / this.moteur.getVitesseMax());
@@ -69,8 +80,8 @@ public class VoitureHybride extends Voiture {
 	}
 	
 	protected void recharger() {
-		this.niveauReservoir += this.vitesseRechargement * ConfigGlobal.FPS_RATE;
-		this.niveauBatterie += this.vitesseRechargement * ConfigGlobal.FPS_RATE;
+		this.niveauReservoir += this.vitesseRechargementEssence * ConfigGlobal.FPS_RATE;
+		this.niveauBatterie += this.vitesseRechargementElectrique * ConfigGlobal.FPS_RATE;
 		
 		if(this.niveauReservoir >= ConfigVoiture.NIVEAU_HYBRIDE_RESERVOIR_MAX) {
 			this.niveauReservoir = ConfigVoiture.NIVEAU_HYBRIDE_RESERVOIR_MAX;

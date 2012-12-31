@@ -38,6 +38,9 @@ public class Position {
 			case TYPE_TURN_BOTTOM_TO_RIGHT:
 				this.direction = new Direction(TypeDirection.RIGHT, TypeDirection.BOTTOM);
 				break;
+			case TYPE_NONE:
+				this.direction = null;
+				break;
 		}
 	}
 	
