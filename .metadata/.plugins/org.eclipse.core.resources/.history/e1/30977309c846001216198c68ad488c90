@@ -1,6 +1,0 @@
-
-public abstract class MoteurEssence {
-	public static final int VITESSE_MAX = 100;
-	public static final int ACCELERATION = 70;
-	public static final int HABILITE = 40;
-}

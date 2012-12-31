@@ -1,8 +1,0 @@
-
-public class VoitureEssence extends Voiture {
-	
-	protected int niveauReservoir;
-	
-	public static int VITESSE_MAX = 100;
-	
-}

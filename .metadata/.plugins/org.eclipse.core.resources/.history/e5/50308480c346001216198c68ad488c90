@@ -1,4 +1,0 @@
-
-public class TypeSegment extends Enum<E> {
-
-}

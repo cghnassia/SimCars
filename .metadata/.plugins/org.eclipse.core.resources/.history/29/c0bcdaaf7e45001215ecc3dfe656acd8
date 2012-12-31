@@ -1,9 +1,0 @@
-
-public class VoitureElectrique extends Voiture {
-	
-	public static final int VITESSE_MAX = 100;
-	
-	public VoitureElectrique() {
-		
-	}
-}
