@@ -17,6 +17,7 @@ public abstract class Voiture {
 	protected boolean hasFinished;
 	protected boolean isFilling;
 	protected int cDureeRechargement;
+	protected double timeCourse;
 	
 	public void init() {
 		this.cPosition = new Position(this.course.getCircuit().getSegmentDepart());
@@ -25,6 +26,7 @@ public abstract class Voiture {
 		this.hasFinished = false;
 		this.isFilling = false;
 		this.classement = 0;
+		this.timeCourse = 0;
 	}
 	
 	public TypeVoiture getType() {
@@ -73,6 +75,14 @@ public abstract class Voiture {
 	
 	public void setClassement(int pClassement) {
 		this.classement = pClassement;
+	}
+	
+	public double getTimeCourse() {
+		return this.timeCourse;
+	}
+	
+	public void setTimeCourse(double pTimeCourse) {
+		this.timeCourse = pTimeCourse;
 	}
 	
 	public void update() {

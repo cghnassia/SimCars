@@ -37,7 +37,8 @@ public abstract class ParametresVoitureView extends JPanel {
 		
 		this.txtVitesse.setEditable(false);
 		this.txtNbTours.setEditable(false);
-		this.txtClassement.setEditable(false);		
+		this.txtClassement.setEditable(false);	
+		
 		//this.northPanel.setPreferredSize(new Dimension(300, 20));
 		//this.southPanel.setPreferredSize(new Dimension(300, 20));
 		

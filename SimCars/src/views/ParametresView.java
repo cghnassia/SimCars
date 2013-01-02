@@ -15,6 +15,7 @@ public class ParametresView extends JPanel {
 	protected ParametresVoitureElectriqueView parametresVoitureElectriqueView;
 	protected ParametresVoitureHybrideView parametresVoitureHyrbrideView;
 	protected CourseControlesView courseControlesView;
+	protected CourseTimeView courseTimeView;
 
 	protected CourseController courseController;
 	
@@ -38,12 +39,13 @@ public class ParametresView extends JPanel {
 		this.parametresVoitureElectriqueView = new ParametresVoitureElectriqueView(this.courseController.getCourseModel().getVoitureElectrique(), this.imageJaugeElectricite, this.imageStandAllume, this.imageStandEteint);
 		this.parametresVoitureHyrbrideView = new ParametresVoitureHybrideView(this.courseController.getCourseModel().getVoitureHybride(), this.imageJaugeEssence, this.imageJaugeElectricite, this.imageStandAllume, this.imageStandEteint);
 		this.courseControlesView = new CourseControlesView(this.courseController);
+		this.courseTimeView = new CourseTimeView(this.courseController.getCourseModel());
 		
 		add(this.parametresVoitureEssenceView);
 		add(this.parametresVoitureElectriqueView);
 		add(this.parametresVoitureHyrbrideView);
 		add(new JPanel());
-		add(new JPanel());
+		add(this.courseTimeView);
 		add(this.courseControlesView);
 		
 	}
@@ -52,10 +54,15 @@ public class ParametresView extends JPanel {
 		this.parametresVoitureEssenceView.update();
 		this.parametresVoitureElectriqueView.update();
 		this.parametresVoitureHyrbrideView.update();
+		this.courseTimeView.update();
 	}
 	
 	public CourseControlesView getCourseControlesView() {
 		return this.courseControlesView;
+	}
+	
+	public CourseTimeView getCourseTimeView() {
+		return this.courseTimeView;
 	}
 
 }

@@ -16,6 +16,7 @@ public class CourseModel implements Runnable {
 	protected boolean isDemarrer;
 	protected boolean isCourseFinie;
 	protected int vitesseSimulation;
+	protected double timeCourse;
 	
 	public CourseModel(CourseController pCourseController) {
 		this.courseController = pCourseController;
@@ -27,6 +28,7 @@ public class CourseModel implements Runnable {
 		this.isDemarrer = false;
 		this.isCourseFinie = false;
 		this.vitesseSimulation = 1;
+		this.timeCourse = 0;
 	}
 	
 	public void init(Circuit pCircuit, VoitureElectrique pVoitureElectrique, VoitureEssence pVoitureEssence, VoitureHybride pVoitureHybride) {
@@ -56,6 +58,7 @@ public class CourseModel implements Runnable {
 		while(! this.isCourseFinie) {
 			if(this.isDemarrer) {
 				update();
+				this.timeCourse += ConfigGlobal.FPS_RATE;
 			}
 			try {
 				Thread.currentThread().sleep((int) (ConfigGlobal.FPS_RATE * 1000) / vitesseSimulation);
@@ -79,7 +82,12 @@ public class CourseModel implements Runnable {
 	}
 	
 	public void hasFinished(Voiture voiture) {
-		//this.timer.stop();
+		voiture.setTimeCourse(this.timeCourse);
+		this.courseController.getCourseView().getParametresView().getCourseTimeView().addResult(voiture.getType());
+	}
+	
+	public double getTimeCourse() {
+		return this.timeCourse;
 	}
 	
 	public VoitureElectrique getVoitureElectrique() {

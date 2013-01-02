@@ -30,6 +30,7 @@ public class CourseControlesView extends JPanel implements ActionListener {
 		this.ralentir = new JButton("<<");
 		this.vitesseSimulation = new JTextArea();
 		this.vitesseSimulation.setEditable(false);
+		this.vitesseSimulation.setBackground(getBackground());
 		
 		JPanel centerJP = new JPanel(new FlowLayout());
 		centerJP.add(this.ralentir);

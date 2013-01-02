@@ -70,9 +70,9 @@ public class CourseController {
 	}
 	
 	public void courseFinie() {
-		courseView.getCourseControlesView().enableAccelerer(false);
-		courseView.getCourseControlesView().enableRalentir(false);
-		courseView.getCourseControlesView().setCourseFinie();
+		courseView.getParametresView().getCourseControlesView().enableAccelerer(false);
+		courseView.getParametresView().getCourseControlesView().enableRalentir(false);
+		courseView.getParametresView().getCourseControlesView().setCourseFinie();
 	}
 	
 	public CourseModel getCourseModel() {
@@ -86,7 +86,7 @@ public class CourseController {
 	public void demarrerPauseCourse() {
 		if(! this.getCourseModel().isCourseFinie()) {
 			this.courseModel.setDemarrer(! this.courseModel.isDemarrer());
-			this.courseView.getCourseControlesView().enableDemarrer(! this.courseModel.isDemarrer());
+			this.courseView.getParametresView().getCourseControlesView().enableDemarrer(! this.courseModel.isDemarrer());
 		}
 	}
 	public void accelererCourse() {
@@ -94,9 +94,9 @@ public class CourseController {
 		this.courseView.setVitesseSimulation(this.courseModel.getVitesseSimulation());
 		
 		if(this.courseModel.getVitesseSimulation() == 16) {
-			this.courseView.getCourseControlesView().enableAccelerer(false);
+			this.courseView.getParametresView().getCourseControlesView().enableAccelerer(false);
 		}
-		this.courseView.getCourseControlesView().enableRalentir(true);
+		this.courseView.getParametresView().getCourseControlesView().enableRalentir(true);
 		
 	}
 	
@@ -105,9 +105,9 @@ public class CourseController {
 		this.courseView.setVitesseSimulation(this.courseModel.getVitesseSimulation());
 		
 		if(this.courseModel.getVitesseSimulation() == 1) {
-			this.courseView.getCourseControlesView().enableRalentir(false);
+			this.courseView.getParametresView().getCourseControlesView().enableRalentir(false);
 		}
-		this.courseView.getCourseControlesView().enableAccelerer(true);
+		this.courseView.getParametresView().getCourseControlesView().enableAccelerer(true);
 
 	}
 }
