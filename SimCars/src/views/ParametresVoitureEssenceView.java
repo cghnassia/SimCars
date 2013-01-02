@@ -33,10 +33,6 @@ public class ParametresVoitureEssenceView extends ParametresVoitureView {
 		this.imageStandEteint = pImageStandEteint;
 		this.labelStand = new JLabel(imageStandEteint);
 		
-		this.txtVitesse = new JTextField();
-		this.txtNbTours = new JTextField();
-		this.txtClassement = new JTextField();
-		
 		JPanel jaugePanel = new JPanel();
 		jaugePanel.setLayout(null);
 		jaugePanel.setPreferredSize(new Dimension(220, 50));
@@ -65,7 +61,7 @@ public class ParametresVoitureEssenceView extends ParametresVoitureView {
 
 	@Override
 	public void update() {
-			updateVitesse((int)(Math.round(voitureModel.getCVitesse())));
+			updateVitesse((int) voitureModel.getCVitesse());
 			updateStand(voitureModel.hasToFill(), voitureModel.isFilling());
 			updateNbTours(voitureModel.getNbTours() + 1, voitureModel.getNbToursTotal());
 			updateClassement(voitureModel.getClassement() + 1);

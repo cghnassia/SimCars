@@ -88,7 +88,7 @@ public class ParametresVoitureHybrideView extends ParametresVoitureView {
 
 	@Override
 	public void update() {
-			updateVitesse((int)(Math.round(voitureModel.getCVitesse())));
+			updateVitesse((int)(voitureModel.getCVitesse()));
 			updateStand(voitureModel.hasToFill(), voitureModel.isFilling());
 			updateNbTours(voitureModel.getNbTours() + 1, voitureModel.getNbToursTotal());
 			updateClassement(voitureModel.getClassement() + 1);

@@ -68,7 +68,7 @@ public class VoitureView extends JPanel {
 	public void updatePosition(Position position) {
 		Segment segment = position.getSegment();
 		
-		DisplayVoitureProperties dvp = DisplayVoiturePropertiesFactory.getDisplayVoitureProperties(segment.getType(), this.type, position.getDirection(), position.getAvancement());
+		DisplayVoitureProperties dvp = DisplayVoiturePropertiesFactory.getDisplayVoitureProperties(segment.getType(), this.type, position.getDirection(), (int) position.getAvancement());
 		moveVoiture((int) segment.getPosition().getX(), (int) segment.getPosition().getY(), (int) dvp.getPosition().getX(), (int) dvp.getPosition().getY(), dvp.getRotation());
 		/*if(this.type == TypeVoiture.VOITURE_ESSENCE && segment.getType() == TypeSegment.TYPE_TURN_BOTTOM_TO_RIGHT) {
 			System.out.println(dvp.getPosition() + " - " + dvp.getRotation());

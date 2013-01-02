@@ -23,18 +23,17 @@ public class Segment {
 			return this.vitesseMax;
 		}
 		
-		//la vitesse maximume d'une voiture sur ce troncon en fonction de son habilité
 		public int getVitesseMaxEffective(int habilite) {
-			int res;
+			double res;
 			
 			if(difficulte == 1) {
 				res = this.vitesseMax;
 			}
 			else {
-				res = (int) (((double) habilite / ((difficulte - 1)* 100)) * this.vitesseMax);
+				res = this.vitesseMax * (((double) habilite / 100) / difficulte);
 			}
 
-			return res;
+			return (int) res;
 		}
 		
 		public boolean isStand() {

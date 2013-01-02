@@ -60,6 +60,19 @@ public class CourseController {
 		this.threadView = new Thread(courseView, "courseView");
 		this.threadModel = new Thread(courseModel, "courseModel");
 		
+		
+			threadModel.start();
+			threadView.start();
+	}
+	
+	public boolean isDemarrer() {
+		return this.getCourseModel().isDemarrer();
+	}
+	
+	public void courseFinie() {
+		courseView.getCourseControlesView().enableAccelerer(false);
+		courseView.getCourseControlesView().enableRalentir(false);
+		courseView.getCourseControlesView().setCourseFinie();
 	}
 	
 	public CourseModel getCourseModel() {
@@ -70,9 +83,31 @@ public class CourseController {
 		return this.courseView;
 	}
 	
-	public void demarrer() {
+	public void demarrerPauseCourse() {
+		if(! this.getCourseModel().isCourseFinie()) {
+			this.courseModel.setDemarrer(! this.courseModel.isDemarrer());
+			this.courseView.getCourseControlesView().enableDemarrer(! this.courseModel.isDemarrer());
+		}
+	}
+	public void accelererCourse() {
+		this.courseModel.accelererSimulation();
+		this.courseView.setVitesseSimulation(this.courseModel.getVitesseSimulation());
 		
-		threadView.start();
-		threadModel.start();
+		if(this.courseModel.getVitesseSimulation() == 16) {
+			this.courseView.getCourseControlesView().enableAccelerer(false);
+		}
+		this.courseView.getCourseControlesView().enableRalentir(true);
+		
+	}
+	
+	public void ralentirCourse() {
+		this.courseModel.ralentirSimulation();
+		this.courseView.setVitesseSimulation(this.courseModel.getVitesseSimulation());
+		
+		if(this.courseModel.getVitesseSimulation() == 1) {
+			this.courseView.getCourseControlesView().enableRalentir(false);
+		}
+		this.courseView.getCourseControlesView().enableAccelerer(true);
+
 	}
 }

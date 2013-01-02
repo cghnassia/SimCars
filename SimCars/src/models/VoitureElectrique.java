@@ -27,7 +27,7 @@ public class VoitureElectrique extends Voiture {
 		return this.niveauBatterieMax;
 	}
 	
-	protected void updateConsommation(int distance) {
+	protected void updateConsommation(double distance) {
 		//System.out.println("distance : " + distance);
 		this.niveauBatterie -= (ConfigMoteur.MOTEUR_ELECTRIQUE_CONSOMMATION * distance) * (this.cVitesse / this.moteur.getVitesseMax());	
 	}

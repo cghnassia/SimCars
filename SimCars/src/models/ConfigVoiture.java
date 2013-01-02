@@ -1,9 +1,9 @@
 package models;
 
 public abstract class ConfigVoiture {
-	public static final int VOITURE_ESSENCE_HABILITE = 50;
+	public static final int VOITURE_ESSENCE_HABILITE = 70;
 	public static final int VOITURE_ELECTRIQUE_HABILITE = 80;
-	public static final int VOITURE_HYRIDE_HABILITE = 40;
+	public static final int VOITURE_HYRIDE_HABILITE = 65;
 	
 	//public static final int NIVEAU_ESSENCE_RESERVOIR_MAX = 100;
 	public static final int NIVEAU_ESSENCE_RESERVOIR_MAX = 100;
@@ -17,7 +17,7 @@ public abstract class ConfigVoiture {
 	public static final double VITESSE_RECHARGEMENT_ESSENCE = 5; 		//quantité rechargée par seconde
 	public static final double VITESSE_RECHARGEMENT_ELECTRIQUE = 10;	//quantité rechargée par secode
 	
-	public static final double ESSENCE_FREINAGE = 1.5;
-	public static final double ELECTRIQUE_FREINAGE = 3;
-	public static final double HYBRIDE_FREINAGE = 2.2;
+	public static final double ESSENCE_FREINAGE = 0.5;
+	public static final double ELECTRIQUE_FREINAGE = 1;
+	public static final double HYBRIDE_FREINAGE = 2;
 }

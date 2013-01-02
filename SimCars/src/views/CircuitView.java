@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import models.Circuit;
 import models.ConfigCircuit;
 import models.Segment;
+import models.TypeSegment;
 
 public class CircuitView extends JPanel {
 	
@@ -65,7 +66,10 @@ public class CircuitView extends JPanel {
 		Segment segment;
 		for(int i = 0; i < circuit.getLongueur(); i++) {
 			segment = circuit.getSegmentAt(i);
-			paneHolder[segment.getPosition().y][segment.getPosition().x].removeAll();
+			if(paneHolder[segment.getPosition().y][segment.getPosition().x].getComponentCount() > 0) {
+					paneHolder[segment.getPosition().y][segment.getPosition().x].removeAll();
+			}
+		
 			
 			switch(segment.getType()) {
 				case TYPE_STRAIGHT_HORIZONTAL:
@@ -100,7 +104,21 @@ public class CircuitView extends JPanel {
 			jlb = new JLabel(new ImageIcon(segments.get(res)));
 			jlb.setBounds(0, 0, 50, 50);
 			jlb.setPreferredSize(new Dimension(50, 50));
-			paneHolder[segment.getPosition().y][segment.getPosition().x].add(jlb, 1);
+			paneHolder[segment.getPosition().y][segment.getPosition().x].add(jlb, 2);
+			
+			if(i == 0) {
+				if(segment.getType() == TypeSegment.TYPE_STRAIGHT_HORIZONTAL) {
+					jlb = new JLabel(new ImageIcon(ChargementImage.chargerImage("img/ligne_vertical.png")));
+					jlb.setBounds(46, 11, 4, 28);
+					jlb.setPreferredSize(new Dimension(4, 18));
+				}
+				else {
+					jlb = new JLabel(new ImageIcon(ChargementImage.chargerImage("img/ligne_horizontal.png")));
+					jlb.setBounds(11, 0, 28, 4);
+					jlb.setPreferredSize(new Dimension(28, 4));
+				}
+				paneHolder[segment.getPosition().y][segment.getPosition().x].add(jlb, 0);
+			}
 			
 			if(segment.isStand()) {
 				jlb = new JLabel(new ImageIcon(segments.get(9)));
@@ -110,8 +128,7 @@ public class CircuitView extends JPanel {
 			}
 		}
 		
-		setVisible(true);
-		this.repaint();
+		//setVisible(true);
 	}
 			
 	protected BufferedImage chargerImageSegment(String location) {

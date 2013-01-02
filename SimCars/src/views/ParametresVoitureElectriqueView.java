@@ -34,10 +34,6 @@ public class ParametresVoitureElectriqueView extends ParametresVoitureView {
 		this.imageStandEteint = pImageStandEteint;
 		this.labelStand = new JLabel(imageStandEteint);
 		
-		this.txtVitesse = new JTextField();
-		this.txtNbTours = new JTextField();
-		this.txtClassement = new JTextField();
-		
 		JPanel jaugePanel = new JPanel();
 		jaugePanel.setLayout(null);
 		jaugePanel.setPreferredSize(new Dimension(220, 50));
@@ -65,7 +61,7 @@ public class ParametresVoitureElectriqueView extends ParametresVoitureView {
 
 	@Override
 	public void update() {
-			updateVitesse((int)(Math.round(voitureModel.getCVitesse())));
+			updateVitesse((int) voitureModel.getCVitesse());
 			updateStand(voitureModel.hasToFill(), voitureModel.isFilling());
 			updateNbTours(voitureModel.getNbTours() + 1, voitureModel.getNbToursTotal());
 			updateClassement(voitureModel.getClassement() + 1);
@@ -74,10 +70,6 @@ public class ParametresVoitureElectriqueView extends ParametresVoitureView {
 	
 	public void updateJauge(double niveauReservoir, double niveauReservoirMax) {
 		this.labelJauge.setBounds(10, 0 ,(int)(niveauReservoir * this.widthJauge / 100), this.labelJauge.getHeight());
-	}
-	
-	public void updateVitesse(int vitesse) {
-		this.txtVitesse.setText("Vitesse : " + vitesse);
 	}
 	
 }

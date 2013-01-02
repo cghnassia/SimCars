@@ -50,7 +50,7 @@ public class VoitureHybride extends Voiture {
 	}
 	
 
-	public void updateConsommation(int distance) {
+	public void updateConsommation(double distance) {
 		if(this.moteur.getType() == TypeMoteur.TYPE_ESSENCE) {
 			this.niveauReservoir -= (ConfigMoteur.MOTEUR_ESSENCE_CONSOMMATION * distance) * ((double) this.cVitesse / this.moteur.getVitesseMax());
 			loadBatterie(distance);
@@ -71,7 +71,7 @@ public class VoitureHybride extends Voiture {
 	}
 	
 	//chargement de la batterie lorsque la voiture utilise le moteur essence
-	protected void loadBatterie(int distance) {
+	protected void loadBatterie(double distance) {
 		this.niveauBatterie += (ConfigMoteur.HYBRIDE_RECHARGE_BATTERIE * distance);
 		
 		if(this.niveauBatterie > ConfigVoiture.NIVEAU_HYBRIDE_BATTERIE_MAX) {
@@ -116,8 +116,7 @@ public class VoitureHybride extends Voiture {
 		int res;
 	
 		res = (int) (this.niveauReservoir / ConfigMoteur.MOTEUR_ESSENCE_CONSOMMATION);
-		res += (int) (res * ConfigMoteur.HYBRIDE_RECHARGE_BATTERIE);
-		res += (int) (this.niveauBatterie / ConfigMoteur.MOTEUR_ELECTRIQUE_CONSOMMATION);
+		res += (int) ((res * ConfigMoteur.HYBRIDE_RECHARGE_BATTERIE + this.niveauBatterie) /  ConfigMoteur.MOTEUR_ELECTRIQUE_CONSOMMATION);
 		
 		return res;
 	}

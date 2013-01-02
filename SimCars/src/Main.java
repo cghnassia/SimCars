@@ -29,17 +29,23 @@ public class Main {
 	*/
 	public Main() {
 		CourseController courseController = new CourseController();
+		try {
+			Thread.currentThread().sleep(1000); //Sinon l'affichage ne se passe pas bien
+		}
+		catch (InterruptedException e ){
+			//
+		}
 		JFrame frame = new JFrame();
 		frame.add(courseController.getCourseView());
-		frame.setSize(new Dimension(ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH + 300, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT));
+		frame.setSize(new Dimension(ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH + 320, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT));
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		
-		courseController.demarrer();
 	}
 	
+	
 	public static void main(String[] args) {
+		
         SwingUtilities.invokeLater(new Runnable(){
             public void run() {
                 new Main();

@@ -2,7 +2,7 @@ package models;
 
 public class Position {
 	protected Segment cSegment;
-	protected int avancement;
+	protected double avancement;
 	protected Direction direction; //true = normal, false = inverse
 	
 	public static final int AVANCEMENT_MAX = 100;
@@ -44,7 +44,7 @@ public class Position {
 		}
 	}
 	
-	public Position(Segment pCSegment, int pAvancement, Direction pDirection) {
+	public Position(Segment pCSegment, double pAvancement, Direction pDirection) {
 		this.cSegment = pCSegment;
 		this.avancement = pAvancement;
 		this.direction = pDirection;
@@ -66,26 +66,24 @@ public class Position {
 		this.direction = direction;
 	}
 	
-	public int getAvancement() {
+	public double getAvancement() {
 		return this.avancement;
 	}
 	
-	public void setPosition(Segment pCSegment, int pAvancement) throws DepassementSegmentException {
+	public void setPosition(Segment pCSegment, double pAvancement) {
 		
 		this.cSegment = pCSegment;
 		this.avancement = pAvancement;
 		
 		if(pAvancement > Position.AVANCEMENT_MAX) {
 			this.avancement = Position.AVANCEMENT_MAX;
-			throw new DepassementSegmentException(Position.AVANCEMENT_MAX - this.avancement);
 		}
 	}
 	
-	public void update(double distance) throws DepassementSegmentException {
+	public void update(double distance)  {
 		this.avancement += distance;
 		if(this.avancement > Position.AVANCEMENT_MAX) {
 			this.avancement = Position.AVANCEMENT_MAX;
-			throw new DepassementSegmentException(Position.AVANCEMENT_MAX - this.avancement);
 		}
 	}
 

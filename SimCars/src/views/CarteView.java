@@ -49,7 +49,6 @@ public class CarteView extends JLayeredPane{
 			circuitView.init(this.courseController.getCourseModel().getCircuit());
 			
 			update();
-			repaint();
 		}
 		
 		public void update() {

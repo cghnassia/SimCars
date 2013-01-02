@@ -42,8 +42,6 @@ public class Moteur {
 				res = vitesseMax - vitesse;
 			}
 		}
-		
-		//System.out.println("getAcceleration potentielle : " + res);
 
 		return res;
 	}

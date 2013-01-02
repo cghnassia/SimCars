@@ -51,4 +51,12 @@ public class CourseView extends JPanel implements Runnable {
 			parametresView.update();
 		}
 	}
+	
+	public CourseControlesView getCourseControlesView() {
+		return this.parametresView.getCourseControlesView();
+	}
+	
+	public void setVitesseSimulation(int value) {
+		this.parametresView.getCourseControlesView().setVitesseSimulation(value);
+	}
 }
