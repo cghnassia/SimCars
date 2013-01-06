@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 import models.ConfigCircuit;
 
 import controllers.CourseController;
+import controllers.EditionController;
 
 
 public class Main {
@@ -28,7 +29,8 @@ public class Main {
 	}
 	*/
 	public Main() {
-		CourseController courseController = new CourseController();
+		//CourseController courseController = new CourseController();
+		EditionController editionController = new EditionController();
 		try {
 			Thread.currentThread().sleep(1000); //Sinon l'affichage ne se passe pas bien
 		}
@@ -36,8 +38,9 @@ public class Main {
 			//
 		}
 		JFrame frame = new JFrame();
-		frame.add(courseController.getCourseView());
-		frame.setSize(new Dimension(ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH + 320, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT));
+		//frame.add(courseController.getCourseView());
+		frame.add(editionController.getEditionView());
+		frame.setSize(new Dimension(ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH + 100, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT));
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

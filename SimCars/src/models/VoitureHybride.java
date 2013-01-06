@@ -45,12 +45,12 @@ public class VoitureHybride extends Voiture {
 		return this.moteur;
 	}
 	
-	public void switchMoteur(TypeMoteur pMoteur) {
+	protected void switchMoteur(TypeMoteur pMoteur) {
 		this.moteur = new Moteur(pMoteur);
 	}
 	
 
-	public void updateConsommation(double distance) {
+	protected void updateConsommation(double distance) {
 		if(this.moteur.getType() == TypeMoteur.TYPE_ESSENCE) {
 			this.niveauReservoir -= (ConfigMoteur.MOTEUR_ESSENCE_CONSOMMATION * distance) * ((double) this.cVitesse / this.moteur.getVitesseMax());
 			loadBatterie(distance);
@@ -96,7 +96,7 @@ public class VoitureHybride extends Voiture {
 		}
 	}
 	
-	public void afficher() {
+	protected void afficher() {
 		String moteurString;
 		if(this.moteur.getType() == TypeMoteur.TYPE_ESSENCE) {
 			moteurString = "essence";

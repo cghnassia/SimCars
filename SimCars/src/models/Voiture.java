@@ -33,7 +33,7 @@ public abstract class Voiture {
 		return this.type;	
 	}
 	
-	public void setId(TypeVoiture pType) {
+	public void setType(TypeVoiture pType) {
 		this.type = pType;
 	}
 	
@@ -236,15 +236,20 @@ public abstract class Voiture {
 	
 	protected boolean isFreinage() {
 		
+		boolean standTrouve = false;
 		boolean res = false;
 		boolean check = false;
-		int vitesse;
+		int distance;
+		int vitesse = 0;
 		Segment segment;
-		for(int i = 1; i < this.course.getCircuit().getLongueur(); i++) {
+		for(int i = 0; i < this.course.getCircuit().getLongueur(); i++) {
+			distance = 0;
 			segment = this.course.getCircuit().getSegmentAt(this.iSegment + i);
 			
-			if(segment.isStand() && hasToFill()) {
+			if(segment.isStand() && hasToFill() && ! standTrouve) {
 				check = true;
+				standTrouve = true;
+				distance = ConfigCircuit.LONGUEUR_SEGMENT /2;
 				vitesse = 0;
 			}
 			else {
@@ -258,9 +263,8 @@ public abstract class Voiture {
 			}
 				
 			if(check) {
-				int distance = i * ConfigCircuit.LONGUEUR_SEGMENT - (int) this.cPosition.getAvancement();
+				distance += (i * ConfigCircuit.LONGUEUR_SEGMENT) - (int) this.cPosition.getAvancement();
 				if(distance <= calculeDistanceFreinage(vitesse)) {
-					//System.out.println("distance jusqu'au segment = " + distance + " - distance de freinage nŽcessaire = " + calculeDistanceFreinage(vitesse));
 					res = true;
 					break;
 				}

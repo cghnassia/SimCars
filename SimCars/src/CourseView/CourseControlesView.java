@@ -1,4 +1,4 @@
-package views;
+package CourseView;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

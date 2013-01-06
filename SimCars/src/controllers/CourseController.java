@@ -3,7 +3,8 @@ package controllers;
 
 import java.awt.Dimension;
 
-import views.CourseView;
+import CourseView.CourseView;
+
 import models.Circuit;
 import models.CourseModel;
 import models.SegmentFactory;

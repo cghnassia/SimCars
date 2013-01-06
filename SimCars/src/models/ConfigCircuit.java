@@ -17,5 +17,6 @@ public class ConfigCircuit {
 	public final static String IMAGE_HARD_VERTICAL = "img/segment_hard_vertical.png";
 	public final static String IMAGE_HARD_HORIZONTAL = "img/segment_hard_horizontal.png";
 	public final static String IMAGE_STAND = "img/segment_stand.png";
-	
+	public final static String IMAGE_ARRIVEE_HORIZONTAL = "img/arrivee_horizontal.png";
+	public final static String IMAGE_ARRIVEE_VERTICAL = "img/arrivee_vertical.png";
 }

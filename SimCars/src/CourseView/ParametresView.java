@@ -1,4 +1,4 @@
-package views;
+package CourseView;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
