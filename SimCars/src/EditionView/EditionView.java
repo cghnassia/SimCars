@@ -24,6 +24,7 @@ public class EditionView extends JPanel {
 	
 	protected LeftPanelView leftPanelView;
 	protected CircuitPanelView circuitPanelView;
+	protected BottomPanelView bottomPanelView;
 	
 	protected ArrayList<JLabelItem> segmentsLabels;
 	protected ArrayList<JLabelItem> arriveesLabels;
@@ -41,10 +42,12 @@ public class EditionView extends JPanel {
 		
 		this.leftPanelView = new LeftPanelView(this, segmentsLabels, arriveesLabels.get(1), standLabel);
 		this.circuitPanelView = new CircuitPanelView(this, segmentsLabels, arriveesLabels, standLabel);
+		this.bottomPanelView = new BottomPanelView();
 		
 		setLayout(new BorderLayout());
 		add(this.leftPanelView, BorderLayout.WEST);
 		add(this.circuitPanelView, BorderLayout.CENTER);
+		add(this.bottomPanelView, BorderLayout.SOUTH);
 	}
 	
 	public void initLabels() {

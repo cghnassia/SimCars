@@ -40,7 +40,7 @@ public class Main {
 		JFrame frame = new JFrame();
 		//frame.add(courseController.getCourseView());
 		frame.add(editionController.getEditionView());
-		frame.setSize(new Dimension(ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH + 100, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT));
+		frame.setSize(new Dimension(ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_WIDTH + 100, ConfigCircuit.WIDTH_CASE * ConfigCircuit.NB_CASES_HEIGHT + 140));
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
